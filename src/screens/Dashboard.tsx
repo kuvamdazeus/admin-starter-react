@@ -5,6 +5,8 @@ import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { Menu } from "primereact/menu";
 import { ChartData, ChartOptions } from "chart.js";
+import { LayoutContext, LayoutProvider } from "../layout/context/layoutcontext";
+import Layout from "../layout/layout";
 
 const lineData: ChartData = {
   labels: ["January", "February", "March", "April", "May", "June", "July"],
@@ -33,6 +35,8 @@ const Dashboard = () => {
   const menu1 = useRef<Menu>(null);
   const menu2 = useRef<Menu>(null);
   const [lineOptions, setLineOptions] = useState<ChartOptions>({});
+
+  const { onMenuToggle } = useContext(LayoutContext);
 
   const applyLightTheme = () => {
     const lineOptions: ChartOptions = {
@@ -429,4 +433,10 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default function DashboardPage() {
+  return (
+    <Layout>
+      <Dashboard />
+    </Layout>
+  );
+}

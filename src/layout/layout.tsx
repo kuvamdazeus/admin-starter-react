@@ -10,8 +10,11 @@ import AppConfig from "./AppConfig";
 import { LayoutContext } from "./context/layoutcontext";
 import PrimeReact from "primereact/api";
 import { ChildContainerProps, LayoutState, AppTopbarRef } from "../types/types";
+import { protectedRoutes } from "../constants";
 
 const Layout = ({ children }: ChildContainerProps) => {
+  const showSidebar = protectedRoutes.includes(window.location.pathname);
+
   const { layoutConfig, layoutState, setLayoutState } = useContext(LayoutContext);
   const topbarRef = useRef<AppTopbarRef>(null);
   const sidebarRef = useRef<HTMLDivElement>(null);
@@ -140,9 +143,11 @@ const Layout = ({ children }: ChildContainerProps) => {
 
       <div className={containerClass}>
         <AppTopbar ref={topbarRef} />
-        <div ref={sidebarRef} className="layout-sidebar">
-          <AppSidebar />
-        </div>
+        {showSidebar && (
+          <div ref={sidebarRef} className="layout-sidebar">
+            <AppSidebar />
+          </div>
+        )}
         <div className="layout-main-container">
           <div className="layout-main">{children}</div>
           <AppFooter />

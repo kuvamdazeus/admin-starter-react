@@ -6,20 +6,31 @@ import { LayoutContext } from "../layout/context/layoutcontext";
 import { InputText } from "primereact/inputtext";
 import { classNames } from "primereact/utils";
 import { Page } from "../types/types";
-import AppConfig from "../layout/AppConfig";
 import { useNavigate } from "react-router-dom";
 
 const LoginPage: Page = () => {
   const navigate = useNavigate();
 
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [checked, setChecked] = useState(false);
+  const [rememberMeChecked, setRememberMeChecked] = useState(false);
   const { layoutConfig } = useContext(LayoutContext);
 
   const containerClassName = classNames(
     "surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden",
     { "p-input-filled": layoutConfig.inputStyle === "filled" }
   );
+
+  const [errors, setErrors] = useState({ email: false, password: false });
+
+  const submit = () => {
+    if (!email) setErrors((errs) => ({ ...errs, email: true }));
+    if (!password) setErrors((errs) => ({ ...errs, password: true }));
+
+    if (email && password) {
+      // make request
+    }
+  };
 
   return (
     <div className={containerClassName}>
@@ -39,7 +50,7 @@ const LoginPage: Page = () => {
           <div className="w-full surface-card py-8 px-5 sm:px-8" style={{ borderRadius: "53px" }}>
             <div className="text-center mb-5">
               <img src="/demo/images/login/avatar.png" alt="Image" height="50" className="mb-3" />
-              <div className="text-900 text-3xl font-medium mb-3">Welcome, Isabel!</div>
+              <div className="text-900 text-3xl font-medium mb-3">Welcome</div>
               <span className="text-600 font-medium">Sign in to continue</span>
             </div>
 
@@ -51,7 +62,9 @@ const LoginPage: Page = () => {
                 id="email1"
                 type="text"
                 placeholder="Email address"
-                className="w-full md:w-30rem mb-5"
+                className={"w-full md:w-30rem mb-5 " + (errors.email ? "p-invalid" : "")}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 style={{ padding: "1rem" }}
               />
 
@@ -64,7 +77,7 @@ const LoginPage: Page = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"
                 toggleMask
-                className="w-full mb-5"
+                className={"w-full mb-5 " + (errors.password ? "p-invalid" : "")}
                 inputClassName="w-full p-3 md:w-30rem"
               ></Password>
 
@@ -72,8 +85,8 @@ const LoginPage: Page = () => {
                 <div className="flex align-items-center">
                   <Checkbox
                     inputId="rememberme1"
-                    checked={checked}
-                    onChange={(e) => setChecked(e.checked ?? false)}
+                    checked={rememberMeChecked}
+                    onChange={(e) => setRememberMeChecked(e.checked ?? false)}
                     className="mr-2"
                   ></Checkbox>
                   <label htmlFor="rememberme1">Remember me</label>
@@ -85,7 +98,7 @@ const LoginPage: Page = () => {
                   Forgot password?
                 </a>
               </div>
-              <Button label="Sign In" className="w-full p-3 text-xl" onClick={() => navigate("/")}></Button>
+              <Button label="Sign In" className="w-full p-3 text-xl" onClick={submit}></Button>
             </div>
           </div>
         </div>

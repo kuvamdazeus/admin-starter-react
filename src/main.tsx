@@ -12,12 +12,15 @@ import "./index.css";
 
 import Dashboard from "./screens/Dashboard";
 import Login from "./screens/Login";
+import ProductsPage from "./screens/Products";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/">
       <Route path="/" element={<Login />} />
       <Route path="dashboard" element={<Dashboard />} />
+      <Route path="products" element={<ProductsPage />} />
+      <Route path="products" element={<ProductsPage />} />
     </Route>
   )
 );

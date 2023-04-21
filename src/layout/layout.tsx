@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-
 import { useEventListener, useUnmountEffect } from "primereact/hooks";
 import { classNames } from "primereact/utils";
 import React, { useContext, useEffect, useRef } from "react";
@@ -13,8 +11,6 @@ import { ChildContainerProps, LayoutState, AppTopbarRef } from "../types/types";
 import { protectedRoutes } from "../constants";
 
 const Layout = ({ children }: ChildContainerProps) => {
-  const showSidebar = protectedRoutes.includes(window.location.pathname);
-
   const { layoutConfig, layoutState, setLayoutState } = useContext(LayoutContext);
   const topbarRef = useRef<AppTopbarRef>(null);
   const sidebarRef = useRef<HTMLDivElement>(null);
@@ -128,7 +124,7 @@ const Layout = ({ children }: ChildContainerProps) => {
     <React.Fragment>
       {/* <Head>
             <title>Sakai by PrimeReact | Free Admin Template for NextJS</title>
-            <meta charSet="UTF-8" />
+          <meta charSet="UTF-8" />
             <meta name="description" content="The ultimate collection of design-agnostic, flexible and accessible React UI Components." />
             <meta name="robots" content="index, follow" />
             <meta name="viewport" content="initial-scale=1, width=device-width" />
@@ -143,11 +139,9 @@ const Layout = ({ children }: ChildContainerProps) => {
 
       <div className={containerClass}>
         <AppTopbar ref={topbarRef} />
-        {showSidebar && (
-          <div ref={sidebarRef} className="layout-sidebar">
-            <AppSidebar />
-          </div>
-        )}
+        <div ref={sidebarRef} className="layout-sidebar">
+          <AppSidebar />
+        </div>
         <div className="layout-main-container">
           <div className="layout-main">{children}</div>
           <AppFooter />

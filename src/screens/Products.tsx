@@ -17,7 +17,7 @@ import { Demo } from "../types/types";
 import Layout from "../layout/layout";
 
 const Products = () => {
-  let emptyProduct: Demo.Product = {
+  let initialState: Demo.Product = {
     id: "",
     name: "",
     image: "",
@@ -29,52 +29,48 @@ const Products = () => {
     inventoryStatus: "INSTOCK",
   };
 
-  const [products, setProducts] = useState<Demo.Product[]>([]);
-  const [productDialog, setProductDialog] = useState(false);
-  const [deleteProductDialog, setDeleteProductDialog] = useState(false);
-  const [deleteProductsDialog, setDeleteProductsDialog] = useState(false);
-  const [product, setProduct] = useState<Demo.Product>(emptyProduct);
-  const [selectedProducts, setSelectedProducts] = useState<Demo.Product[]>([]);
+  const [entities, setEntities] = useState<Demo.Product[]>([]);
+  const [entityDialog, setEntityDialog] = useState(false);
+  const [deleteEntityDialog, setDeleteEntityDialog] = useState(false);
+  const [deleteEntitiesDialog, setDeleteEntitiesDialog] = useState(false);
+  const [entity, setEntity] = useState<Demo.Product>(initialState);
+  const [selectedEntities, setSelectedEntities] = useState<Demo.Product[]>([]);
   const [submitted, setSubmitted] = useState(false);
   const [globalFilter, setGlobalFilter] = useState("");
   const toast = useRef<Toast>(null);
   const dt = useRef<DataTable<Demo.Product[]>>(null);
 
   useEffect(() => {
-    ProductService.getProducts().then((data) => setProducts(data));
+    ProductService.getProducts().then((data) => setEntities(data));
   }, []);
 
-  const formatCurrency = (value: number) => {
-    return value.toLocaleString("en-US", { style: "currency", currency: "USD" });
-  };
-
   const openNew = () => {
-    setProduct(emptyProduct);
+    setEntity(initialState);
     setSubmitted(false);
-    setProductDialog(true);
+    setEntityDialog(true);
   };
 
   const hideDialog = () => {
     setSubmitted(false);
-    setProductDialog(false);
+    setEntityDialog(false);
   };
 
   const hideDeleteProductDialog = () => {
-    setDeleteProductDialog(false);
+    setDeleteEntityDialog(false);
   };
 
   const hideDeleteProductsDialog = () => {
-    setDeleteProductsDialog(false);
+    setDeleteEntitiesDialog(false);
   };
 
   const saveProduct = () => {
     setSubmitted(true);
 
-    if (product.name.trim()) {
-      let _products = [...products];
-      let _product = { ...product };
-      if (product.id) {
-        const index = findIndexById(product.id);
+    if (entity.name.trim()) {
+      let _products = [...entities];
+      let _product = { ...entity };
+      if (entity.id) {
+        const index = findIndexById(entity.id);
 
         _products[index] = _product;
         toast.current?.show({
@@ -95,27 +91,27 @@ const Products = () => {
         });
       }
 
-      setProducts(_products);
-      setProductDialog(false);
-      setProduct(emptyProduct);
+      setEntities(_products);
+      setEntityDialog(false);
+      setEntity(initialState);
     }
   };
 
   const editProduct = (product: Demo.Product) => {
-    setProduct({ ...product });
-    setProductDialog(true);
+    setEntity({ ...product });
+    setEntityDialog(true);
   };
 
   const confirmDeleteProduct = (product: Demo.Product) => {
-    setProduct(product);
-    setDeleteProductDialog(true);
+    setEntity(product);
+    setDeleteEntityDialog(true);
   };
 
   const deleteProduct = () => {
-    let _products = products.filter((val) => val.id !== product.id);
-    setProducts(_products);
-    setDeleteProductDialog(false);
-    setProduct(emptyProduct);
+    let _products = entities.filter((val) => val.id !== entity.id);
+    setEntities(_products);
+    setDeleteEntityDialog(false);
+    setEntity(initialState);
     toast.current?.show({
       severity: "success",
       summary: "Successful",
@@ -126,8 +122,8 @@ const Products = () => {
 
   const findIndexById = (id: string) => {
     let index = -1;
-    for (let i = 0; i < products.length; i++) {
-      if (products[i].id === id) {
+    for (let i = 0; i < entities.length; i++) {
+      if (entities[i].id === id) {
         index = i;
         break;
       }
@@ -150,14 +146,14 @@ const Products = () => {
   };
 
   const confirmDeleteSelected = () => {
-    setDeleteProductsDialog(true);
+    setDeleteEntitiesDialog(true);
   };
 
   const deleteSelectedProducts = () => {
-    let _products = products.filter((val) => !selectedProducts?.includes(val));
-    setProducts(_products);
-    setDeleteProductsDialog(false);
-    setSelectedProducts([]);
+    let _products = entities.filter((val) => !selectedEntities?.includes(val));
+    setEntities(_products);
+    setDeleteEntitiesDialog(false);
+    setSelectedEntities([]);
     toast.current?.show({
       severity: "success",
       summary: "Successful",
@@ -167,25 +163,25 @@ const Products = () => {
   };
 
   const onCategoryChange = (e: RadioButtonChangeEvent) => {
-    let _product = { ...product };
+    let _product = { ...entity };
     _product["category"] = e.value;
-    setProduct(_product);
+    setEntity(_product);
   };
 
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, name: string) => {
     const val = (e.target && e.target.value) || "";
-    let _product = { ...product };
+    let _product = { ...entity };
     _product[`${name}`] = val;
 
-    setProduct(_product);
+    setEntity(_product);
   };
 
   const onInputNumberChange = (e: InputNumberValueChangeEvent, name: string) => {
     const val = e.value || 0;
-    let _product = { ...product };
+    let _product = { ...entity };
     _product[`${name}`] = val;
 
-    setProduct(_product);
+    setEntity(_product);
   };
 
   const leftToolbarTemplate = () => {
@@ -198,7 +194,7 @@ const Products = () => {
             icon="pi pi-trash"
             severity="danger"
             onClick={confirmDeleteSelected}
-            disabled={!selectedProducts || !selectedProducts.length}
+            disabled={!selectedEntities || !selectedEntities.length}
           />
         </div>
       </React.Fragment>
@@ -256,7 +252,7 @@ const Products = () => {
     return (
       <>
         <span className="p-column-title">Price</span>
-        {formatCurrency(rowData.price as number)}
+        {rowData.price}
       </>
     );
   };
@@ -273,7 +269,6 @@ const Products = () => {
   const ratingBodyTemplate = (rowData: Demo.Product) => {
     return (
       <>
-        <span className="p-column-title">Reviews</span>
         <Rating value={rowData.rating} readOnly cancel={false} />
       </>
     );
@@ -347,9 +342,9 @@ const Products = () => {
 
           <DataTable
             ref={dt}
-            value={products}
-            selection={selectedProducts}
-            onSelectionChange={(e) => setSelectedProducts(e.value as Demo.Product[])}
+            value={entities}
+            selection={selectedEntities}
+            onSelectionChange={(e) => setSelectedEntities(e.value as Demo.Product[])}
             dataKey="id"
             paginator
             rows={10}
@@ -398,7 +393,7 @@ const Products = () => {
           </DataTable>
 
           <Dialog
-            visible={productDialog}
+            visible={entityDialog}
             style={{ width: "450px" }}
             header="Product Details"
             modal
@@ -406,10 +401,10 @@ const Products = () => {
             footer={productDialogFooter}
             onHide={hideDialog}
           >
-            {product.image && (
+            {entity.image && (
               <img
-                src={`/demo/images/product/${product.image}`}
-                alt={product.image}
+                src={`/demo/images/product/${entity.image}`}
+                alt={entity.image}
                 width="150"
                 className="mt-0 mx-auto mb-5 block shadow-2"
               />
@@ -418,19 +413,19 @@ const Products = () => {
               <label htmlFor="name">Name</label>
               <InputText
                 id="name"
-                value={product.name}
+                value={entity.name}
                 onChange={(e) => onInputChange(e, "name")}
                 required
                 autoFocus
-                className={classNames({ "p-invalid": submitted && !product.name })}
+                className={classNames({ "p-invalid": submitted && !entity.name })}
               />
-              {submitted && !product.name && <small className="p-invalid">Name is required.</small>}
+              {submitted && !entity.name && <small className="p-invalid">Name is required.</small>}
             </div>
             <div className="field">
               <label htmlFor="description">Description</label>
               <InputTextarea
                 id="description"
-                value={product.description}
+                value={entity.description}
                 onChange={(e) => onInputChange(e, "description")}
                 required
                 rows={3}
@@ -447,7 +442,7 @@ const Products = () => {
                     name="category"
                     value="Accessories"
                     onChange={onCategoryChange}
-                    checked={product.category === "Accessories"}
+                    checked={entity.category === "Accessories"}
                   />
                   <label htmlFor="category1">Accessories</label>
                 </div>
@@ -457,7 +452,7 @@ const Products = () => {
                     name="category"
                     value="Clothing"
                     onChange={onCategoryChange}
-                    checked={product.category === "Clothing"}
+                    checked={entity.category === "Clothing"}
                   />
                   <label htmlFor="category2">Clothing</label>
                 </div>
@@ -467,7 +462,7 @@ const Products = () => {
                     name="category"
                     value="Electronics"
                     onChange={onCategoryChange}
-                    checked={product.category === "Electronics"}
+                    checked={entity.category === "Electronics"}
                   />
                   <label htmlFor="category3">Electronics</label>
                 </div>
@@ -477,7 +472,7 @@ const Products = () => {
                     name="category"
                     value="Fitness"
                     onChange={onCategoryChange}
-                    checked={product.category === "Fitness"}
+                    checked={entity.category === "Fitness"}
                   />
                   <label htmlFor="category4">Fitness</label>
                 </div>
@@ -489,7 +484,7 @@ const Products = () => {
                 <label htmlFor="price">Price</label>
                 <InputNumber
                   id="price"
-                  value={product.price}
+                  value={entity.price}
                   onValueChange={(e) => onInputNumberChange(e, "price")}
                   mode="currency"
                   currency="USD"
@@ -500,7 +495,7 @@ const Products = () => {
                 <label htmlFor="quantity">Quantity</label>
                 <InputNumber
                   id="quantity"
-                  value={product.quantity}
+                  value={entity.quantity}
                   onValueChange={(e) => onInputNumberChange(e, "quantity")}
                 />
               </div>
@@ -508,7 +503,7 @@ const Products = () => {
           </Dialog>
 
           <Dialog
-            visible={deleteProductDialog}
+            visible={deleteEntityDialog}
             style={{ width: "450px" }}
             header="Confirm"
             modal
@@ -517,16 +512,16 @@ const Products = () => {
           >
             <div className="flex align-items-center justify-content-center">
               <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: "2rem" }} />
-              {product && (
+              {entity && (
                 <span>
-                  Are you sure you want to delete <b>{product.name}</b>?
+                  Are you sure you want to delete <b>{entity.name}</b>?
                 </span>
               )}
             </div>
           </Dialog>
 
           <Dialog
-            visible={deleteProductsDialog}
+            visible={deleteEntitiesDialog}
             style={{ width: "450px" }}
             header="Confirm"
             modal
@@ -535,7 +530,7 @@ const Products = () => {
           >
             <div className="flex align-items-center justify-content-center">
               <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: "2rem" }} />
-              {product && <span>Are you sure you want to delete the selected products?</span>}
+              {entity && <span>Are you sure you want to delete the selected products?</span>}
             </div>
           </Dialog>
         </div>

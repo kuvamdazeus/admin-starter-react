@@ -314,19 +314,19 @@ const Products = () => {
     </div>
   );
 
-  const productDialogFooter = (
+  const entityDialogFooter = (
     <>
       <Button label="Cancel" icon="pi pi-times" text onClick={hideDialog} />
       <Button label="Save" icon="pi pi-check" text onClick={saveEntity} />
     </>
   );
-  const deleteProductDialogFooter = (
+  const deleteEntityDialogFooter = (
     <>
       <Button label="No" icon="pi pi-times" text onClick={hideDeleteEntityDialog} />
       <Button label="Yes" icon="pi pi-check" text onClick={deleteEntity} />
     </>
   );
-  const deleteProductsDialogFooter = (
+  const deleteEntitiesDialogFooter = (
     <>
       <Button label="No" icon="pi pi-times" text onClick={hideDeleteEntitiesDialog} />
       <Button label="Yes" icon="pi pi-check" text onClick={deleteSelected} />
@@ -398,7 +398,7 @@ const Products = () => {
             header="Product Details"
             modal
             className="p-fluid"
-            footer={productDialogFooter}
+            footer={entityDialogFooter}
             onHide={hideDialog}
           >
             {entity.image && (
@@ -507,7 +507,7 @@ const Products = () => {
             style={{ width: "450px" }}
             header="Confirm"
             modal
-            footer={deleteProductDialogFooter}
+            footer={deleteEntityDialogFooter}
             onHide={hideDeleteEntityDialog}
           >
             <div className="flex align-items-center justify-content-center">
@@ -525,7 +525,7 @@ const Products = () => {
             style={{ width: "450px" }}
             header="Confirm"
             modal
-            footer={deleteProductsDialogFooter}
+            footer={deleteEntitiesDialogFooter}
             onHide={hideDeleteEntitiesDialog}
           >
             <div className="flex align-items-center justify-content-center">

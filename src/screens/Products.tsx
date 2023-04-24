@@ -55,15 +55,15 @@ const Products = () => {
     setEntityDialog(false);
   };
 
-  const hideDeleteProductDialog = () => {
+  const hideDeleteEntityDialog = () => {
     setDeleteEntityDialog(false);
   };
 
-  const hideDeleteProductsDialog = () => {
+  const hideDeleteEntitiesDialog = () => {
     setDeleteEntitiesDialog(false);
   };
 
-  const saveProduct = () => {
+  const saveEntity = () => {
     setSubmitted(true);
 
     if (entity.name.trim()) {
@@ -97,17 +97,17 @@ const Products = () => {
     }
   };
 
-  const editProduct = (product: Demo.Product) => {
+  const editEntity = (product: Demo.Product) => {
     setEntity({ ...product });
     setEntityDialog(true);
   };
 
-  const confirmDeleteProduct = (product: Demo.Product) => {
+  const confirmDelete = (product: Demo.Product) => {
     setEntity(product);
     setDeleteEntityDialog(true);
   };
 
-  const deleteProduct = () => {
+  const deleteEntity = () => {
     let _products = entities.filter((val) => val.id !== entity.id);
     setEntities(_products);
     setDeleteEntityDialog(false);
@@ -149,7 +149,7 @@ const Products = () => {
     setDeleteEntitiesDialog(true);
   };
 
-  const deleteSelectedProducts = () => {
+  const deleteSelected = () => {
     let _products = entities.filter((val) => !selectedEntities?.includes(val));
     setEntities(_products);
     setDeleteEntitiesDialog(false);
@@ -293,9 +293,9 @@ const Products = () => {
           rounded
           severity="success"
           className="mr-2"
-          onClick={() => editProduct(rowData)}
+          onClick={() => editEntity(rowData)}
         />
-        <Button icon="pi pi-trash" rounded severity="warning" onClick={() => confirmDeleteProduct(rowData)} />
+        <Button icon="pi pi-trash" rounded severity="warning" onClick={() => confirmDelete(rowData)} />
       </>
     );
   };
@@ -317,19 +317,19 @@ const Products = () => {
   const productDialogFooter = (
     <>
       <Button label="Cancel" icon="pi pi-times" text onClick={hideDialog} />
-      <Button label="Save" icon="pi pi-check" text onClick={saveProduct} />
+      <Button label="Save" icon="pi pi-check" text onClick={saveEntity} />
     </>
   );
   const deleteProductDialogFooter = (
     <>
-      <Button label="No" icon="pi pi-times" text onClick={hideDeleteProductDialog} />
-      <Button label="Yes" icon="pi pi-check" text onClick={deleteProduct} />
+      <Button label="No" icon="pi pi-times" text onClick={hideDeleteEntityDialog} />
+      <Button label="Yes" icon="pi pi-check" text onClick={deleteEntity} />
     </>
   );
   const deleteProductsDialogFooter = (
     <>
-      <Button label="No" icon="pi pi-times" text onClick={hideDeleteProductsDialog} />
-      <Button label="Yes" icon="pi pi-check" text onClick={deleteSelectedProducts} />
+      <Button label="No" icon="pi pi-times" text onClick={hideDeleteEntitiesDialog} />
+      <Button label="Yes" icon="pi pi-check" text onClick={deleteSelected} />
     </>
   );
 
@@ -508,7 +508,7 @@ const Products = () => {
             header="Confirm"
             modal
             footer={deleteProductDialogFooter}
-            onHide={hideDeleteProductDialog}
+            onHide={hideDeleteEntityDialog}
           >
             <div className="flex align-items-center justify-content-center">
               <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: "2rem" }} />
@@ -526,7 +526,7 @@ const Products = () => {
             header="Confirm"
             modal
             footer={deleteProductsDialogFooter}
-            onHide={hideDeleteProductsDialog}
+            onHide={hideDeleteEntitiesDialog}
           >
             <div className="flex align-items-center justify-content-center">
               <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: "2rem" }} />

@@ -9,7 +9,7 @@ import { InputTextarea } from "primereact/inputtextarea";
 import { Toast } from "primereact/toast";
 import { Toolbar } from "primereact/toolbar";
 import { classNames } from "primereact/utils";
-import { ProductService } from "@/demo/service/ProductService";
+import { ProductService } from "@/service/ProductService";
 import Layout from "@/layout/layout";
 import { IProduct } from "@/types/products";
 

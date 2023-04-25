@@ -1,23 +1,20 @@
+import React, { useEffect, useRef, useState } from "react";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { Dialog } from "primereact/dialog";
-import { FileUpload } from "primereact/fileupload";
 import { InputNumber, InputNumberValueChangeEvent } from "primereact/inputnumber";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
-import { RadioButton, RadioButtonChangeEvent } from "primereact/radiobutton";
-import { Rating } from "primereact/rating";
 import { Toast } from "primereact/toast";
 import { Toolbar } from "primereact/toolbar";
 import { classNames } from "primereact/utils";
-import React, { useEffect, useRef, useState } from "react";
-import { ProductService } from "../demo/service/ProductService";
-import { Demo } from "../types/types";
-import Layout from "../layout/layout";
+import { ProductService } from "@/demo/service/ProductService";
+import Layout from "@/layout/layout";
+import { IProduct } from "@/types/products";
 
 const Products = () => {
-  let initialState: Demo.Product = {
+  let initialState: IProduct = {
     id: "",
     name: "",
     image: "",
@@ -28,17 +25,18 @@ const Products = () => {
     rating: 0,
     inventoryStatus: "INSTOCK",
   };
+  const importCsvInputRef = useRef<HTMLInputElement | null>(null);
 
-  const [entities, setEntities] = useState<Demo.Product[]>([]);
+  const [entities, setEntities] = useState<IProduct[]>([]);
   const [entityDialog, setEntityDialog] = useState(false);
   const [deleteEntityDialog, setDeleteEntityDialog] = useState(false);
   const [deleteEntitiesDialog, setDeleteEntitiesDialog] = useState(false);
-  const [entity, setEntity] = useState<Demo.Product>(initialState);
-  const [selectedEntities, setSelectedEntities] = useState<Demo.Product[]>([]);
+  const [entity, setEntity] = useState<IProduct>(initialState);
+  const [selectedEntities, setSelectedEntities] = useState<IProduct[]>([]);
   const [submitted, setSubmitted] = useState(false);
   const [globalFilter, setGlobalFilter] = useState("");
   const toast = useRef<Toast>(null);
-  const dt = useRef<DataTable<Demo.Product[]>>(null);
+  const dt = useRef<DataTable<IProduct[]>>(null);
 
   useEffect(() => {
     ProductService.getAll().then((data) => setEntities(data));
@@ -63,16 +61,15 @@ const Products = () => {
     setDeleteEntitiesDialog(false);
   };
 
-  const saveEntity = () => {
+  const saveEntity = async () => {
     setSubmitted(true);
 
     if (entity.name.trim()) {
-      let _products = [...entities];
-      let _product = { ...entity };
-      if (entity.id) {
-        const index = findIndexById(entity.id);
+      let _products: IProduct[] = [];
 
-        _products[index] = _product;
+      if (entity.id) {
+        _products = await ProductService.updateById(entity.id, entity);
+
         toast.current?.show({
           severity: "success",
           summary: "Successful",
@@ -80,9 +77,8 @@ const Products = () => {
           life: 3000,
         });
       } else {
-        _product.id = createId();
-        _product.image = "product-placeholder.svg";
-        _products.push(_product);
+        _products = await ProductService.createOne(entity);
+
         toast.current?.show({
           severity: "success",
           summary: "Successful",
@@ -92,53 +88,34 @@ const Products = () => {
       }
 
       setEntities(_products);
-      setEntityDialog(false);
-      setEntity(initialState);
+      // setEntityDialog(false);
+      // setEntity(initialState);
     }
   };
 
-  const editEntity = (product: Demo.Product) => {
-    setEntity({ ...product });
+  const editEntity = (rowData: IProduct) => {
+    setEntity({ ...rowData });
     setEntityDialog(true);
   };
 
-  const confirmDelete = (product: Demo.Product) => {
-    setEntity(product);
+  const confirmDelete = (rowData: IProduct) => {
+    setEntity(rowData);
     setDeleteEntityDialog(true);
   };
 
-  const deleteEntity = () => {
-    let _products = entities.filter((val) => val.id !== entity.id);
+  const deleteEntity = async () => {
+    const _products = await ProductService.deleteById(entity.id);
+
     setEntities(_products);
     setDeleteEntityDialog(false);
     setEntity(initialState);
+
     toast.current?.show({
       severity: "success",
       summary: "Successful",
       detail: "Product Deleted",
       life: 3000,
     });
-  };
-
-  const findIndexById = (id: string) => {
-    let index = -1;
-    for (let i = 0; i < entities.length; i++) {
-      if (entities[i].id === id) {
-        index = i;
-        break;
-      }
-    }
-
-    return index;
-  };
-
-  const createId = () => {
-    let id = "";
-    let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    for (let i = 0; i < 5; i++) {
-      id += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return id;
   };
 
   const exportCSV = () => {
@@ -149,11 +126,13 @@ const Products = () => {
     setDeleteEntitiesDialog(true);
   };
 
-  const deleteSelected = () => {
-    let _products = entities.filter((val) => !selectedEntities?.includes(val));
+  const deleteSelected = async () => {
+    const _products = await ProductService.deleteSelected(selectedEntities);
+
     setEntities(_products);
     setDeleteEntitiesDialog(false);
     setSelectedEntities([]);
+
     toast.current?.show({
       severity: "success",
       summary: "Successful",
@@ -162,26 +141,41 @@ const Products = () => {
     });
   };
 
-  const onCategoryChange = (e: RadioButtonChangeEvent) => {
-    let _product = { ...entity };
-    _product["category"] = e.value;
-    setEntity(_product);
-  };
-
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, name: string) => {
     const val = (e.target && e.target.value) || "";
-    let _product = { ...entity };
-    _product[`${name}`] = val;
+    let newEntity = { ...entity };
+    newEntity[`${name}`] = val;
 
-    setEntity(_product);
+    // setEntity(newEntity);
   };
 
   const onInputNumberChange = (e: InputNumberValueChangeEvent, name: string) => {
     const val = e.value || 0;
-    let _product = { ...entity };
-    _product[`${name}`] = val;
+    let newEntity = { ...entity };
+    newEntity[`${name}`] = val;
 
-    setEntity(_product);
+    // setEntity(newEntity);
+  };
+
+  const onFileImport = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const csvFile = e.target.files?.[0];
+    if (!csvFile) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const csvTextContent = e.target?.result as string;
+      // ...
+    };
+
+    reader.readAsText(csvFile);
+
+    // setEntities(_products);
+    toast.current?.show({
+      severity: "success",
+      summary: "Successful",
+      detail: "Products Imported",
+      life: 3000,
+    });
   };
 
   const leftToolbarTemplate = () => {
@@ -204,28 +198,30 @@ const Products = () => {
   const rightToolbarTemplate = () => {
     return (
       <React.Fragment>
-        <FileUpload
-          mode="basic"
-          accept="image/*"
-          maxFileSize={1000000}
-          chooseLabel="Import"
-          className="mr-2 inline-block"
+        <Button
+          label="Import CSV"
+          icon="pi pi-plus"
+          severity="info"
+          className="mr-3"
+          onClick={() => importCsvInputRef.current?.click()}
         />
+        <input ref={importCsvInputRef} onChange={onFileImport} className="hidden" type="file" accept=".csv" />
+
         <Button label="Export" icon="pi pi-upload" severity="help" onClick={exportCSV} />
       </React.Fragment>
     );
   };
 
   // ------- Column Body Templates --------
-  const codeBodyTemplate = (rowData: Demo.Product) => {
+  const codeBodyTemplate = (rowData: IProduct) => {
     return <>{rowData.code}</>;
   };
 
-  const nameBodyTemplate = (rowData: Demo.Product) => {
+  const nameBodyTemplate = (rowData: IProduct) => {
     return <>{rowData.name}</>;
   };
 
-  const imageBodyTemplate = (rowData: Demo.Product) => {
+  const imageBodyTemplate = (rowData: IProduct) => {
     return (
       <>
         <img
@@ -238,7 +234,7 @@ const Products = () => {
     );
   };
 
-  const actionBodyTemplate = (rowData: Demo.Product) => {
+  const actionBodyTemplate = (rowData: IProduct) => {
     return (
       <>
         <Button
@@ -298,7 +294,7 @@ const Products = () => {
             ref={dt}
             value={entities}
             selection={selectedEntities}
-            onSelectionChange={(e) => setSelectedEntities(e.value as Demo.Product[])}
+            onSelectionChange={(e) => setSelectedEntities(e.value as IProduct[])}
             dataKey="id"
             paginator
             rows={10}
@@ -369,52 +365,6 @@ const Products = () => {
                 rows={3}
                 cols={20}
               />
-            </div>
-
-            <div className="field">
-              <label className="mb-3">Category</label>
-              <div className="formgrid grid">
-                <div className="field-radiobutton col-6">
-                  <RadioButton
-                    inputId="category1"
-                    name="category"
-                    value="Accessories"
-                    onChange={onCategoryChange}
-                    checked={entity.category === "Accessories"}
-                  />
-                  <label htmlFor="category1">Accessories</label>
-                </div>
-                <div className="field-radiobutton col-6">
-                  <RadioButton
-                    inputId="category2"
-                    name="category"
-                    value="Clothing"
-                    onChange={onCategoryChange}
-                    checked={entity.category === "Clothing"}
-                  />
-                  <label htmlFor="category2">Clothing</label>
-                </div>
-                <div className="field-radiobutton col-6">
-                  <RadioButton
-                    inputId="category3"
-                    name="category"
-                    value="Electronics"
-                    onChange={onCategoryChange}
-                    checked={entity.category === "Electronics"}
-                  />
-                  <label htmlFor="category3">Electronics</label>
-                </div>
-                <div className="field-radiobutton col-6">
-                  <RadioButton
-                    inputId="category4"
-                    name="category"
-                    value="Fitness"
-                    onChange={onCategoryChange}
-                    checked={entity.category === "Fitness"}
-                  />
-                  <label htmlFor="category4">Fitness</label>
-                </div>
-              </div>
             </div>
 
             <div className="formgrid grid">

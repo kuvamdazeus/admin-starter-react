@@ -216,71 +216,24 @@ const Products = () => {
     );
   };
 
+  // ------- Column Body Templates --------
   const codeBodyTemplate = (rowData: Demo.Product) => {
-    return (
-      <>
-        <span className="p-column-title">Code</span>
-        {rowData.code}
-      </>
-    );
+    return <>{rowData.code}</>;
   };
 
   const nameBodyTemplate = (rowData: Demo.Product) => {
-    return (
-      <>
-        <span className="p-column-title">Name</span>
-        {rowData.name}
-      </>
-    );
+    return <>{rowData.name}</>;
   };
 
   const imageBodyTemplate = (rowData: Demo.Product) => {
     return (
       <>
-        <span className="p-column-title">Image</span>
         <img
           src={`/demo/images/product/${rowData.image}`}
           alt={rowData.image}
           className="shadow-2"
           width="100"
         />
-      </>
-    );
-  };
-
-  const priceBodyTemplate = (rowData: Demo.Product) => {
-    return (
-      <>
-        <span className="p-column-title">Price</span>
-        {rowData.price}
-      </>
-    );
-  };
-
-  const categoryBodyTemplate = (rowData: Demo.Product) => {
-    return (
-      <>
-        <span className="p-column-title">Category</span>
-        {rowData.category}
-      </>
-    );
-  };
-
-  const ratingBodyTemplate = (rowData: Demo.Product) => {
-    return (
-      <>
-        <Rating value={rowData.rating} readOnly cancel={false} />
-      </>
-    );
-  };
-
-  const statusBodyTemplate = (rowData: Demo.Product) => {
-    return (
-      <>
-        <span className="p-column-title">Status</span>
-        <span className={`product-badge status-${rowData.inventoryStatus?.toLowerCase()}`}>
-          {rowData.inventoryStatus}
-        </span>
       </>
     );
   };
@@ -299,6 +252,7 @@ const Products = () => {
       </>
     );
   };
+  // ------- Column Body Templates --------
 
   const header = (
     <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
@@ -373,22 +327,6 @@ const Products = () => {
               headerStyle={{ minWidth: "15rem" }}
             ></Column>
             <Column header="Image" body={imageBodyTemplate}></Column>
-            <Column field="price" header="Price" body={priceBodyTemplate} sortable></Column>
-            <Column
-              field="category"
-              header="Category"
-              sortable
-              body={categoryBodyTemplate}
-              headerStyle={{ minWidth: "10rem" }}
-            ></Column>
-            <Column field="rating" header="Reviews" body={ratingBodyTemplate} sortable></Column>
-            <Column
-              field="inventoryStatus"
-              header="Status"
-              body={statusBodyTemplate}
-              sortable
-              headerStyle={{ minWidth: "10rem" }}
-            ></Column>
             <Column body={actionBodyTemplate} headerStyle={{ minWidth: "10rem" }}></Column>
           </DataTable>
 

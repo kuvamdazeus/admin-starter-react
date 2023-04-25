@@ -41,7 +41,7 @@ const Products = () => {
   const dt = useRef<DataTable<Demo.Product[]>>(null);
 
   useEffect(() => {
-    ProductService.getProducts().then((data) => setEntities(data));
+    ProductService.getAll().then((data) => setEntities(data));
   }, []);
 
   const openNew = () => {

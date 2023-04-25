@@ -11,10 +11,10 @@ import { Toolbar } from "primereact/toolbar";
 import { classNames } from "primereact/utils";
 import { ProductService } from "@/service/ProductService";
 import Layout from "@/layout/layout";
-import { IProduct } from "@/types/products";
+import { ProductsType } from "@/types/products";
 
 const Products = () => {
-  let initialState: IProduct = {
+  let initialState: ProductsType = {
     id: "",
     name: "",
     image: "",
@@ -27,16 +27,16 @@ const Products = () => {
   };
   const importCsvInputRef = useRef<HTMLInputElement | null>(null);
 
-  const [entities, setEntities] = useState<IProduct[]>([]);
+  const [entities, setEntities] = useState<ProductsType[]>([]);
   const [entityDialog, setEntityDialog] = useState(false);
   const [deleteEntityDialog, setDeleteEntityDialog] = useState(false);
   const [deleteEntitiesDialog, setDeleteEntitiesDialog] = useState(false);
-  const [entity, setEntity] = useState<IProduct>(initialState);
-  const [selectedEntities, setSelectedEntities] = useState<IProduct[]>([]);
+  const [entity, setEntity] = useState<ProductsType>(initialState);
+  const [selectedEntities, setSelectedEntities] = useState<ProductsType[]>([]);
   const [submitted, setSubmitted] = useState(false);
   const [globalFilter, setGlobalFilter] = useState("");
   const toast = useRef<Toast>(null);
-  const dt = useRef<DataTable<IProduct[]>>(null);
+  const dt = useRef<DataTable<ProductsType[]>>(null);
 
   useEffect(() => {
     ProductService.getAll().then((data) => setEntities(data));
@@ -65,7 +65,7 @@ const Products = () => {
     setSubmitted(true);
 
     if (entity.name.trim()) {
-      let _products: IProduct[] = [];
+      let _products: ProductsType[] = [];
 
       if (entity.id) {
         _products = await ProductService.updateById(entity.id, entity);
@@ -93,12 +93,12 @@ const Products = () => {
     }
   };
 
-  const editEntity = (rowData: IProduct) => {
+  const editEntity = (rowData: ProductsType) => {
     setEntity({ ...rowData });
     setEntityDialog(true);
   };
 
-  const confirmDelete = (rowData: IProduct) => {
+  const confirmDelete = (rowData: ProductsType) => {
     setEntity(rowData);
     setDeleteEntityDialog(true);
   };
@@ -213,15 +213,15 @@ const Products = () => {
   };
 
   // ------- Column Body Templates --------
-  const codeBodyTemplate = (rowData: IProduct) => {
+  const codeBodyTemplate = (rowData: ProductsType) => {
     return <>{rowData.code}</>;
   };
 
-  const nameBodyTemplate = (rowData: IProduct) => {
+  const nameBodyTemplate = (rowData: ProductsType) => {
     return <>{rowData.name}</>;
   };
 
-  const imageBodyTemplate = (rowData: IProduct) => {
+  const imageBodyTemplate = (rowData: ProductsType) => {
     return (
       <>
         <img
@@ -234,7 +234,7 @@ const Products = () => {
     );
   };
 
-  const actionBodyTemplate = (rowData: IProduct) => {
+  const actionBodyTemplate = (rowData: ProductsType) => {
     return (
       <>
         <Button
@@ -294,7 +294,7 @@ const Products = () => {
             ref={dt}
             value={entities}
             selection={selectedEntities}
-            onSelectionChange={(e) => setSelectedEntities(e.value as IProduct[])}
+            onSelectionChange={(e) => setSelectedEntities(e.value as ProductsType[])}
             dataKey="id"
             paginator
             rows={10}

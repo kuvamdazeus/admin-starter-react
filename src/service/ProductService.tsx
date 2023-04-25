@@ -1,12 +1,12 @@
-import { IProduct } from "@/types/products";
+import { ProductsType } from "@/types/products";
 
 export const ProductService = {
   async getAll() {
     const resData = await fetch("/demo/data/products.json").then((res) => res.json());
-    return resData.data as IProduct[];
+    return resData.data as ProductsType[];
   },
 
-  async deleteSelected(selected: IProduct[]) {
+  async deleteSelected(selected: ProductsType[]) {
     // ...
 
     const newData = await this.getAll();

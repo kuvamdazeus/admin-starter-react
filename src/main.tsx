@@ -1,8 +1,8 @@
 import Dashboard from "./screens/Dashboard";
 import Login from "./screens/Login";
-import ProductsPage from "./screens/Products/Products";
-import EditProductPage from "./screens/Products/EditProduct";
-import CreateProductPage from "./screens/Products/CreateProduct";
+import XXXXXPage from "./screens/XXXXX/XXXXX";
+import EditXXXXXPage from "./screens/XXXXX/EditXXXXX";
+import CreateXXXXXPage from "./screens/XXXXX/CreateXXXXX";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from "react-router-dom";
@@ -19,9 +19,9 @@ const router = createBrowserRouter(
     <Route path="/">
       <Route path="/" element={<Login />} />
       <Route path="dashboard" element={<Dashboard />} />
-      <Route path="products" element={<ProductsPage />} />
-      <Route path="products/create" element={<CreateProductPage />} />
-      <Route path="products/edit/:id" element={<EditProductPage />} />
+      <Route path="xxxxx" element={<XXXXXPage />} />
+      <Route path="xxxxx/create" element={<CreateXXXXXPage />} />
+      <Route path="xxxxx/edit/:id" element={<EditXXXXXPage />} />
     </Route>
   )
 );

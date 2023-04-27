@@ -1,6 +1,6 @@
 import Layout from "@/layout/layout";
-import { ProductService } from "@/service/ProductService";
-import { ProductsType } from "@/types/products";
+import { XXXXXService } from "@/service/XXXXXService";
+import { XXXXXType } from "@/types/xxxxx";
 import { Button } from "primereact/button";
 import { InputNumber, InputNumberValueChangeEvent } from "primereact/inputnumber";
 import { InputText } from "primereact/inputtext";
@@ -10,10 +10,10 @@ import { classNames } from "primereact/utils";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 
-function CreateProduct() {
+function CreateXXXXX() {
   const params = useParams();
 
-  let initialState: ProductsType = {
+  let initialState: XXXXXType = {
     id: "",
     name: "",
     image: "",
@@ -33,19 +33,19 @@ function CreateProduct() {
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
-    ProductService.getOne(id).then((data) => setEntity(data));
+    XXXXXService.getOne(id).then((data) => setEntity(data));
   }, []);
 
   const saveEntity = async () => {
     setSubmitted(true);
 
     if (entity.id) {
-      await ProductService.updateById(entity.id, entity);
+      await XXXXXService.updateById(entity.id, entity);
 
       toast.current?.show({
         severity: "success",
         summary: "Successful",
-        detail: "Product Updated",
+        detail: "XXXXX Updated",
         life: 3000,
       });
     }
@@ -69,7 +69,7 @@ function CreateProduct() {
 
   return (
     <section className="bg-white p-3 p-fluid border-round">
-      <p className="text-2xl font-bold">Edit Product</p>
+      <p className="text-2xl font-bold">Edit XXXXX</p>
       <Toast ref={toast} />
 
       <div className="field">
@@ -123,10 +123,10 @@ function CreateProduct() {
   );
 }
 
-export default function EditProductPage() {
+export default function EditXXXXXPage() {
   return (
     <Layout>
-      <CreateProduct />
+      <CreateXXXXX />
     </Layout>
   );
 }

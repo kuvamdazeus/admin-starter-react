@@ -6,15 +6,15 @@ import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import { Toast } from "primereact/toast";
 import { Toolbar } from "primereact/toolbar";
-import { ProductService } from "@/service/ProductService";
+import { XXXXXService } from "@/service/XXXXXService";
 import Layout from "@/layout/layout";
-import { ProductsType } from "@/types/products";
+import { XXXXXType } from "@/types/xxxxx";
 import { useNavigate } from "react-router-dom";
 
-const Products = () => {
+const XXXXX = () => {
   const navigate = useNavigate();
 
-  let initialState: ProductsType = {
+  let initialState: XXXXXType = {
     id: "",
     name: "",
     image: "",
@@ -27,17 +27,17 @@ const Products = () => {
   };
   const importCsvInputRef = useRef<HTMLInputElement | null>(null);
 
-  const [entities, setEntities] = useState<ProductsType[]>([]);
+  const [entities, setEntities] = useState<XXXXXType[]>([]);
   const [deleteEntityDialog, setDeleteEntityDialog] = useState(false);
   const [deleteEntitiesDialog, setDeleteEntitiesDialog] = useState(false);
-  const [entity, setEntity] = useState<ProductsType>(initialState);
-  const [selectedEntities, setSelectedEntities] = useState<ProductsType[]>([]);
+  const [entity, setEntity] = useState<XXXXXType>(initialState);
+  const [selectedEntities, setSelectedEntities] = useState<XXXXXType[]>([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const toast = useRef<Toast>(null);
-  const dt = useRef<DataTable<ProductsType[]>>(null);
+  const dt = useRef<DataTable<XXXXXType[]>>(null);
 
   useEffect(() => {
-    ProductService.getAll().then((data) => setEntities(data));
+    XXXXXService.getAll().then((data) => setEntities(data));
   }, []);
 
   const hideDeleteEntityDialog = () => {
@@ -48,22 +48,22 @@ const Products = () => {
     setDeleteEntitiesDialog(false);
   };
 
-  const confirmDelete = (rowData: ProductsType) => {
+  const confirmDelete = (rowData: XXXXXType) => {
     setEntity(rowData);
     setDeleteEntityDialog(true);
   };
 
   const deleteEntity = async () => {
-    const _products = await ProductService.deleteById(entity.id);
+    const _xxxxx = await XXXXXService.deleteById(entity.id);
 
-    setEntities(_products);
+    setEntities(_xxxxx);
     setDeleteEntityDialog(false);
     setEntity(initialState);
 
     toast.current?.show({
       severity: "success",
       summary: "Successful",
-      detail: "Product Deleted",
+      detail: "XXXXX Deleted",
       life: 3000,
     });
   };
@@ -77,16 +77,16 @@ const Products = () => {
   };
 
   const deleteSelected = async () => {
-    const _products = await ProductService.deleteSelected(selectedEntities);
+    const _xxxxx = await XXXXXService.deleteSelected(selectedEntities);
 
-    setEntities(_products);
+    setEntities(_xxxxx);
     setDeleteEntitiesDialog(false);
     setSelectedEntities([]);
 
     toast.current?.show({
       severity: "success",
       summary: "Successful",
-      detail: "Products Deleted",
+      detail: "XXXXX Deleted",
       life: 3000,
     });
   };
@@ -103,11 +103,11 @@ const Products = () => {
 
     reader.readAsText(csvFile);
 
-    // setEntities(_products);
+    // setEntities(_xxxxx);
     toast.current?.show({
       severity: "success",
       summary: "Successful",
-      detail: "Products Imported",
+      detail: "XXXXX Imported",
       life: 3000,
     });
   };
@@ -121,7 +121,7 @@ const Products = () => {
             icon="pi pi-plus"
             severity="success"
             className=" mr-2"
-            onClick={() => navigate("/products/create")}
+            onClick={() => navigate("/xxxxx/create")}
           />
           <Button
             label="Delete"
@@ -153,15 +153,15 @@ const Products = () => {
   };
 
   // ------- Column Body Templates --------
-  const codeBodyTemplate = (rowData: ProductsType) => {
+  const codeBodyTemplate = (rowData: XXXXXType) => {
     return <>{rowData.code}</>;
   };
 
-  const nameBodyTemplate = (rowData: ProductsType) => {
+  const nameBodyTemplate = (rowData: XXXXXType) => {
     return <>{rowData.name}</>;
   };
 
-  const imageBodyTemplate = (rowData: ProductsType) => {
+  const imageBodyTemplate = (rowData: XXXXXType) => {
     return (
       <>
         <img
@@ -174,7 +174,7 @@ const Products = () => {
     );
   };
 
-  const actionBodyTemplate = (rowData: ProductsType) => {
+  const actionBodyTemplate = (rowData: XXXXXType) => {
     return (
       <>
         <Button
@@ -182,7 +182,7 @@ const Products = () => {
           rounded
           severity="success"
           className="mr-2"
-          onClick={() => navigate("/products/edit/" + rowData.id)}
+          onClick={() => navigate("/xxxxx/edit/" + rowData.id)}
         />
         <Button icon="pi pi-trash" rounded severity="warning" onClick={() => confirmDelete(rowData)} />
       </>
@@ -192,7 +192,7 @@ const Products = () => {
 
   const header = (
     <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-      <h5 className="m-0">Manage Products</h5>
+      <h5 className="m-0">Manage XXXXX</h5>
       <span className="block mt-2 md:mt-0 p-input-icon-left">
         <i className="pi pi-search" />
         <InputText
@@ -228,16 +228,16 @@ const Products = () => {
             ref={dt}
             value={entities}
             selection={selectedEntities}
-            onSelectionChange={(e) => setSelectedEntities(e.value as ProductsType[])}
+            onSelectionChange={(e) => setSelectedEntities(e.value as XXXXXType[])}
             dataKey="id"
             paginator
             rows={10}
             rowsPerPageOptions={[5, 10, 25]}
             className="datatable-responsive"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} xxxxx"
             globalFilter={globalFilter}
-            emptyMessage="No products found."
+            emptyMessage="No xxxxx found."
             header={header}
             responsiveLayout="scroll"
           >
@@ -288,7 +288,7 @@ const Products = () => {
           >
             <div className="flex align-items-center justify-content-center">
               <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: "2rem" }} />
-              {entity && <span>Are you sure you want to delete the selected products?</span>}
+              {entity && <span>Are you sure you want to delete the selected xxxxx?</span>}
             </div>
           </Dialog>
         </div>
@@ -297,10 +297,10 @@ const Products = () => {
   );
 };
 
-export default function ProductsPage() {
+export default function XXXXXPage() {
   return (
     <Layout>
-      <Products />
+      <XXXXX />
     </Layout>
   );
 }

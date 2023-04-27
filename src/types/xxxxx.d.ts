@@ -1,4 +1,4 @@
-export type ProductsType = {
+export type XXXXXType = {
   id?: string;
   code?: string;
   name: string;
@@ -11,4 +11,4 @@ export type ProductsType = {
   rating?: number;
   orders?: ProductOrder[];
   [key: string]: string | string[] | number | boolean | undefined | ProductOrder[] | InventoryStatus;
-}
+};

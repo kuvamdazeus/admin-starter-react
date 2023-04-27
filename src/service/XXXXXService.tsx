@@ -1,18 +1,18 @@
-import { ProductsType } from "@/types/products";
+import { XXXXXType } from "@/types/xxxxx";
 
-export const ProductService = {
+export const XXXXXService = {
   async getAll() {
     const resData = await fetch("/demo/data/products.json").then((res) => res.json());
-    return resData.data as ProductsType[];
+    return resData.data as XXXXXType[];
   },
 
   async getOne(id: any) {
     // ...
 
-    return {} as ProductsType;
+    return {} as XXXXXType;
   },
 
-  async deleteSelected(selected: ProductsType[]) {
+  async deleteSelected(selected: XXXXXType[]) {
     // ...
 
     const newData = await this.getAll();

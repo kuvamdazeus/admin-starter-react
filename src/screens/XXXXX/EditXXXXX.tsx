@@ -71,9 +71,7 @@ function CreateXXXXX() {
     <section className="bg-white p-3 p-fluid border-round">
       <p className="text-2xl font-bold">Edit XXXXX</p>
       <Toast ref={toast} />
-
-      {/* --FIELDS-- */}
-
+      INPUT-FIELDS
       <Button className="w-max" label="Save" icon="pi pi-check" onClick={saveEntity} />
     </section>
   );

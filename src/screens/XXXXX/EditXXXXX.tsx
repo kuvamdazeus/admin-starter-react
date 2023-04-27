@@ -95,27 +95,24 @@ function CreateXXXXX() {
           cols={20}
         />
       </div>
-
-      <div className="formgrid grid mb-3">
-        <div className="field col">
-          <label htmlFor="price">Price</label>
-          <InputNumber
-            id="price"
-            value={entity.price}
-            onValueChange={(e) => onInputNumberChange(e, "price")}
-            mode="currency"
-            currency="USD"
-            locale="en-US"
-          />
-        </div>
-        <div className="field col">
-          <label htmlFor="quantity">Quantity</label>
-          <InputNumber
-            id="quantity"
-            value={entity.quantity}
-            onValueChange={(e) => onInputNumberChange(e, "quantity")}
-          />
-        </div>
+      <div className="field">
+        <label htmlFor="price">Price</label>
+        <InputNumber
+          id="price"
+          value={entity.price}
+          onValueChange={(e) => onInputNumberChange(e, "price")}
+          mode="currency"
+          currency="USD"
+          locale="en-US"
+        />
+      </div>
+      <div className="field">
+        <label htmlFor="quantity">Quantity</label>
+        <InputNumber
+          id="quantity"
+          value={entity.quantity}
+          onValueChange={(e) => onInputNumberChange(e, "quantity")}
+        />
       </div>
 
       <Button className="w-max" label="Save" icon="pi pi-check" onClick={saveEntity} />

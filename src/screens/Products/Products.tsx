@@ -3,12 +3,9 @@ import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { Dialog } from "primereact/dialog";
-import { InputNumber, InputNumberValueChangeEvent } from "primereact/inputnumber";
 import { InputText } from "primereact/inputtext";
-import { InputTextarea } from "primereact/inputtextarea";
 import { Toast } from "primereact/toast";
 import { Toolbar } from "primereact/toolbar";
-import { classNames } from "primereact/utils";
 import { ProductService } from "@/service/ProductService";
 import Layout from "@/layout/layout";
 import { ProductsType } from "@/types/products";
@@ -31,12 +28,10 @@ const Products = () => {
   const importCsvInputRef = useRef<HTMLInputElement | null>(null);
 
   const [entities, setEntities] = useState<ProductsType[]>([]);
-  const [entityDialog, setEntityDialog] = useState(false);
   const [deleteEntityDialog, setDeleteEntityDialog] = useState(false);
   const [deleteEntitiesDialog, setDeleteEntitiesDialog] = useState(false);
   const [entity, setEntity] = useState<ProductsType>(initialState);
   const [selectedEntities, setSelectedEntities] = useState<ProductsType[]>([]);
-  const [submitted, setSubmitted] = useState(false);
   const [globalFilter, setGlobalFilter] = useState("");
   const toast = useRef<Toast>(null);
   const dt = useRef<DataTable<ProductsType[]>>(null);
@@ -45,60 +40,12 @@ const Products = () => {
     ProductService.getAll().then((data) => setEntities(data));
   }, []);
 
-  const openNew = () => {
-    setEntity(initialState);
-    setSubmitted(false);
-    setEntityDialog(true);
-  };
-
-  const hideDialog = () => {
-    setSubmitted(false);
-    setEntityDialog(false);
-  };
-
   const hideDeleteEntityDialog = () => {
     setDeleteEntityDialog(false);
   };
 
   const hideDeleteEntitiesDialog = () => {
     setDeleteEntitiesDialog(false);
-  };
-
-  const saveEntity = async () => {
-    setSubmitted(true);
-
-    if (entity.name.trim()) {
-      let _products: ProductsType[] = [];
-
-      if (entity.id) {
-        _products = await ProductService.updateById(entity.id, entity);
-
-        toast.current?.show({
-          severity: "success",
-          summary: "Successful",
-          detail: "Product Updated",
-          life: 3000,
-        });
-      } else {
-        _products = await ProductService.createOne(entity);
-
-        toast.current?.show({
-          severity: "success",
-          summary: "Successful",
-          detail: "Product Created",
-          life: 3000,
-        });
-      }
-
-      setEntities(_products);
-      // setEntityDialog(false);
-      // setEntity(initialState);
-    }
-  };
-
-  const editEntity = (rowData: ProductsType) => {
-    setEntity({ ...rowData });
-    setEntityDialog(true);
   };
 
   const confirmDelete = (rowData: ProductsType) => {
@@ -142,22 +89,6 @@ const Products = () => {
       detail: "Products Deleted",
       life: 3000,
     });
-  };
-
-  const onInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, name: string) => {
-    const val = (e.target && e.target.value) || "";
-    let newEntity = { ...entity };
-    newEntity[`${name}`] = val;
-
-    // setEntity(newEntity);
-  };
-
-  const onInputNumberChange = (e: InputNumberValueChangeEvent, name: string) => {
-    const val = e.value || 0;
-    let newEntity = { ...entity };
-    newEntity[`${name}`] = val;
-
-    // setEntity(newEntity);
   };
 
   const onFileImport = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -251,7 +182,7 @@ const Products = () => {
           rounded
           severity="success"
           className="mr-2"
-          onClick={() => editEntity(rowData)}
+          onClick={() => navigate("/products/edit/" + rowData.id)}
         />
         <Button icon="pi pi-trash" rounded severity="warning" onClick={() => confirmDelete(rowData)} />
       </>
@@ -273,12 +204,6 @@ const Products = () => {
     </div>
   );
 
-  const entityDialogFooter = (
-    <>
-      <Button label="Cancel" icon="pi pi-times" text onClick={hideDialog} />
-      <Button label="Save" icon="pi pi-check" text />
-    </>
-  );
   const deleteEntityDialogFooter = (
     <>
       <Button label="No" icon="pi pi-times" text onClick={hideDeleteEntityDialog} />
@@ -334,70 +259,6 @@ const Products = () => {
             <Column header="Image" body={imageBodyTemplate}></Column>
             <Column body={actionBodyTemplate} headerStyle={{ minWidth: "10rem" }}></Column>
           </DataTable>
-
-          <Dialog
-            visible={entityDialog}
-            style={{ width: "450px" }}
-            header="Product Details"
-            modal
-            className="p-fluid"
-            footer={entityDialogFooter}
-            onHide={hideDialog}
-          >
-            {entity.image && (
-              <img
-                src={`/demo/images/product/${entity.image}`}
-                alt={entity.image}
-                width="150"
-                className="mt-0 mx-auto mb-5 block shadow-2"
-              />
-            )}
-            <div className="field">
-              <label htmlFor="name">Name</label>
-              <InputText
-                id="name"
-                value={entity.name}
-                onChange={(e) => onInputChange(e, "name")}
-                required
-                autoFocus
-                className={classNames({ "p-invalid": submitted && !entity.name })}
-              />
-              {submitted && !entity.name && <small className="p-invalid">Name is required.</small>}
-            </div>
-            <div className="field">
-              <label htmlFor="description">Description</label>
-              <InputTextarea
-                id="description"
-                value={entity.description}
-                onChange={(e) => onInputChange(e, "description")}
-                required
-                rows={3}
-                cols={20}
-              />
-            </div>
-
-            <div className="formgrid grid">
-              <div className="field col">
-                <label htmlFor="price">Price</label>
-                <InputNumber
-                  id="price"
-                  value={entity.price}
-                  onValueChange={(e) => onInputNumberChange(e, "price")}
-                  mode="currency"
-                  currency="USD"
-                  locale="en-US"
-                />
-              </div>
-              <div className="field col">
-                <label htmlFor="quantity">Quantity</label>
-                <InputNumber
-                  id="quantity"
-                  value={entity.quantity}
-                  onValueChange={(e) => onInputNumberChange(e, "quantity")}
-                />
-              </div>
-            </div>
-          </Dialog>
 
           <Dialog
             visible={deleteEntityDialog}

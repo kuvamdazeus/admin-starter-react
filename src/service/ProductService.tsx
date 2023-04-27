@@ -6,6 +6,12 @@ export const ProductService = {
     return resData.data as ProductsType[];
   },
 
+  async getOne(id: any) {
+    // ...
+
+    return {} as ProductsType;
+  },
+
   async deleteSelected(selected: ProductsType[]) {
     // ...
 

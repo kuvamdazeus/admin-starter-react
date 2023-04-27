@@ -12,8 +12,11 @@ import { classNames } from "primereact/utils";
 import { ProductService } from "@/service/ProductService";
 import Layout from "@/layout/layout";
 import { ProductsType } from "@/types/products";
+import { useNavigate } from "react-router-dom";
 
 const Products = () => {
+  const navigate = useNavigate();
+
   let initialState: ProductsType = {
     id: "",
     name: "",
@@ -182,7 +185,13 @@ const Products = () => {
     return (
       <React.Fragment>
         <div className="my-2">
-          <Button label="New" icon="pi pi-plus" severity="success" className=" mr-2" onClick={openNew} />
+          <Button
+            label="New"
+            icon="pi pi-plus"
+            severity="success"
+            className=" mr-2"
+            onClick={() => navigate("/products/create")}
+          />
           <Button
             label="Delete"
             icon="pi pi-trash"
@@ -267,7 +276,7 @@ const Products = () => {
   const entityDialogFooter = (
     <>
       <Button label="Cancel" icon="pi pi-times" text onClick={hideDialog} />
-      <Button label="Save" icon="pi pi-check" text onClick={saveEntity} />
+      <Button label="Save" icon="pi pi-check" text />
     </>
   );
   const deleteEntityDialogFooter = (

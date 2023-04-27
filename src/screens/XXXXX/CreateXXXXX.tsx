@@ -63,48 +63,7 @@ function CreateXXXXX() {
       <p className="text-2xl font-bold">Create New XXXXX</p>
       <Toast ref={toast} />
 
-      <div className="field">
-        <label htmlFor="name">Name</label>
-        <InputText
-          id="name"
-          value={entity.name}
-          onChange={(e) => onInputChange(e, "name")}
-          required
-          autoFocus
-          className={classNames({ "p-invalid": submitted && !entity.name })}
-        />
-        {submitted && !entity.name && <small className="p-invalid">Name is required.</small>}
-      </div>
-      <div className="field">
-        <label htmlFor="description">Description</label>
-        <InputTextarea
-          id="description"
-          value={entity.description}
-          onChange={(e) => onInputChange(e, "description")}
-          required
-          rows={3}
-          cols={20}
-        />
-      </div>
-      <div className="field">
-        <label htmlFor="price">Price</label>
-        <InputNumber
-          id="price"
-          value={entity.price}
-          onValueChange={(e) => onInputNumberChange(e, "price")}
-          mode="currency"
-          currency="USD"
-          locale="en-US"
-        />
-      </div>
-      <div className="field">
-        <label htmlFor="quantity">Quantity</label>
-        <InputNumber
-          id="quantity"
-          value={entity.quantity}
-          onValueChange={(e) => onInputNumberChange(e, "quantity")}
-        />
-      </div>
+      {/* --FIELDS-- */}
 
       <Button className="w-max" label="Save" icon="pi pi-check" onClick={saveEntity} />
     </section>

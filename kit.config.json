@@ -1,0 +1,23 @@
+{
+  "screens": [
+    {
+      "name": "Students",
+      "url": "/students",
+      "crudFields": [
+        { "name": "fullName", "type": "text-normal" },
+        { "name": "bio", "type": "text-big" },
+        { "name": "password", "type": "text-password" },
+        { "name": "rollNo", "type": "number" }
+      ]
+    },
+
+    {
+      "name": "Users",
+      "url": "/users",
+      "crudFields": [
+        { "name": "fullName", "type": "text-normal" },
+        { "name": "password", "type": "text-password" }
+      ]
+    }
+  ]
+}

@@ -37,7 +37,7 @@ const XXXXX = () => {
   const dt = useRef<DataTable<XXXXXType[]>>(null);
 
   useEffect(() => {
-    XXXXXService.getAll().then((data) => setEntities(data));
+    // XXXXXService.getAll().then((data) => setEntities(data));
   }, []);
 
   const hideDeleteEntityDialog = () => {
@@ -153,23 +153,14 @@ const XXXXX = () => {
   };
 
   // ------- Column Body Templates --------
-  const codeBodyTemplate = (rowData: XXXXXType) => {
-    return <>{rowData.code}</>;
+  const textBodyTemplate = (rowData: XXXXXType, fieldName: string) => {
+    return <>{rowData[fieldName]}</>;
   };
 
-  const nameBodyTemplate = (rowData: XXXXXType) => {
-    return <>{rowData.name}</>;
-  };
-
-  const imageBodyTemplate = (rowData: XXXXXType) => {
+  const imageBodyTemplate = (rowData: XXXXXType, fieldName: string) => {
     return (
       <>
-        <img
-          src={`/demo/images/product/${rowData.image}`}
-          alt={rowData.image}
-          className="shadow-2"
-          width="100"
-        />
+        <img src={rowData[fieldName]} className="shadow-2" width="100" />
       </>
     );
   };
@@ -242,21 +233,6 @@ const XXXXX = () => {
             responsiveLayout="scroll"
           >
             <Column selectionMode="multiple" headerStyle={{ width: "4rem" }}></Column>
-            <Column
-              field="code"
-              header="Code"
-              sortable
-              body={codeBodyTemplate}
-              headerStyle={{ minWidth: "15rem" }}
-            ></Column>
-            <Column
-              field="name"
-              header="Name"
-              sortable
-              body={nameBodyTemplate}
-              headerStyle={{ minWidth: "15rem" }}
-            ></Column>
-            <Column header="Image" body={imageBodyTemplate}></Column>
             <Column body={actionBodyTemplate} headerStyle={{ minWidth: "10rem" }}></Column>
           </DataTable>
 

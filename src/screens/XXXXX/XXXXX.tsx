@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 const XXXXX = () => {
   const navigate = useNavigate();
 
-  let initialState: XXXXXType = {
+  const initialState: XXXXXType = {
     id: "",
     name: "",
     image: "",

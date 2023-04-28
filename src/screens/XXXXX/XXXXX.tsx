@@ -246,11 +246,7 @@ const XXXXX = () => {
           >
             <div className="flex align-items-center justify-content-center">
               <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: "2rem" }} />
-              {entity && (
-                <span>
-                  Are you sure you want to delete <b>{entity.name}</b>?
-                </span>
-              )}
+              {entity && <span>Are you sure you want to delete?</span>}
             </div>
           </Dialog>
 

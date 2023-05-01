@@ -13,7 +13,7 @@ import { useParams } from "react-router-dom";
 function CreateXXXXX() {
   const params = useParams();
 
-  let initialState: XXXXXType = {
+  const initialState: XXXXXType = {
     id: "",
     name: "",
     image: "",

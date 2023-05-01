@@ -10,7 +10,7 @@ import { classNames } from "primereact/utils";
 import { useRef, useState } from "react";
 
 function CreateXXXXX() {
-  let initialState: XXXXXType = {
+  const initialState: XXXXXType = {
     id: "",
     name: "",
     image: "",

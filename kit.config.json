@@ -5,8 +5,8 @@
       "url": "/students",
       "crudFields": [
         { "name": "fullName", "type": "InputText" },
-        { "name": "bio", "type": "InputTextarea" },
-        { "name": "password", "type": "InputText" },
+        { "name": "bio", "type": "InputTextarea", "required": false },
+        { "name": "password", "type": "InputText", "tableDisplay": false },
         { "name": "rollNo", "type": "InputNumber" }
       ]
     },

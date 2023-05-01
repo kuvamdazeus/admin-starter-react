@@ -8,7 +8,6 @@ import AppConfig from "./AppConfig";
 import { LayoutContext } from "./context/layoutcontext";
 import PrimeReact from "primereact/api";
 import { ChildContainerProps, LayoutState, AppTopbarRef } from "../types/types";
-import { protectedRoutes } from "../constants";
 
 const Layout = ({ children }: ChildContainerProps) => {
   const { layoutConfig, layoutState, setLayoutState } = useContext(LayoutContext);

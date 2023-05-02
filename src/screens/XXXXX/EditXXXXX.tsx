@@ -40,7 +40,7 @@ function CreateXXXXX() {
   const saveEntity = async () => {
     setSubmitted(true);
 
-    if (entity.id) {
+    if (entity.name.trim()) {
       await XXXXXService.updateById(entity.id, entity);
 
       toast.current?.show({

@@ -3,6 +3,7 @@ import { XXXXXService } from "@/service/XXXXXService";
 import { XXXXXType } from "@/types/xxxxx";
 import { Button } from "primereact/button";
 import { InputNumber, InputNumberValueChangeEvent } from "primereact/inputnumber";
+import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Toast } from "primereact/toast";
@@ -51,18 +52,16 @@ function CreateXXXXX() {
     }
   };
 
-  const onInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, name: string) => {
-    const val = (e.target && e.target.value) || "";
+  const onInputChange = (value: string, name: string) => {
     let newEntity = { ...entity };
-    newEntity[`${name}`] = val;
+    newEntity[`${name}`] = value;
 
     setEntity(newEntity);
   };
 
-  const onInputNumberChange = (e: InputNumberValueChangeEvent, name: string) => {
-    const val = e.value || 0;
+  const onInputNumberChange = (value: number, name: string) => {
     let newEntity = { ...entity };
-    newEntity[`${name}`] = val;
+    newEntity[`${name}`] = value;
 
     setEntity(newEntity);
   };

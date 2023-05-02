@@ -7,7 +7,18 @@
         { "name": "fullName", "type": "InputText" },
         { "name": "bio", "type": "InputTextarea", "required": false },
         { "name": "password", "type": "InputText", "tableDisplay": false },
-        { "name": "rollNo", "type": "InputNumber" }
+        { "name": "rollNo", "type": "InputNumber" },
+        {
+          "name": "city",
+          "type": "Dropdown",
+          "options": [
+            { "name": "New York", "code": "NY" },
+            { "name": "Rome", "code": "RM" },
+            { "name": "London", "code": "LDN" },
+            { "name": "Istanbul", "code": "IST" },
+            { "name": "Paris", "code": "PRS" }
+          ]
+        }
       ]
     },
 

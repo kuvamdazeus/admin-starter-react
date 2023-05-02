@@ -20,15 +20,6 @@
           ]
         }
       ]
-    },
-
-    {
-      "name": "Users",
-      "url": "/users",
-      "crudFields": [
-        { "name": "fullName", "type": "InputText" },
-        { "name": "password", "type": "InputText" }
-      ]
     }
   ]
 }

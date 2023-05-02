@@ -12,11 +12,11 @@
           "name": "city",
           "type": "Dropdown",
           "options": [
-            { "name": "New York", "code": "NY" },
-            { "name": "Rome", "code": "RM" },
-            { "name": "London", "code": "LDN" },
-            { "name": "Istanbul", "code": "IST" },
-            { "name": "Paris", "code": "PRS" }
+            { "name": "New York", "value": "NY" },
+            { "name": "Rome", "value": "RM" },
+            { "name": "London", "value": "LDN" },
+            { "name": "Istanbul", "value": "IST" },
+            { "name": "Paris", "value": "PRS" }
           ]
         }
       ]

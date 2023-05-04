@@ -9,6 +9,15 @@
         { "name": "password", "type": "InputText", "tableDisplay": false },
         { "name": "rollNo", "type": "InputNumber" },
         {
+          "name": "gender",
+          "type": "RadioButton",
+          "options": [
+            { "name": "Male", "value": "M" },
+            { "name": "Female", "value": "F" },
+            { "name": "Other", "value": "O" }
+          ]
+        },
+        {
           "name": "city",
           "type": "Dropdown",
           "options": [

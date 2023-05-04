@@ -11,6 +11,7 @@ import { classNames } from "primereact/utils";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { RadioButton } from "primereact/radiobutton";
+import { InputSwitch } from "primereact/inputswitch";
 
 function CreateXXXXX() {
   const params = useParams();

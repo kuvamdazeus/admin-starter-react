@@ -10,6 +10,7 @@ import { Toast } from "primereact/toast";
 import { classNames } from "primereact/utils";
 import { useRef, useState } from "react";
 import { RadioButton } from "primereact/radiobutton";
+import { InputSwitch } from "primereact/inputswitch";
 
 function CreateXXXXX() {
   const initialState: XXXXXType = {
@@ -25,6 +26,8 @@ function CreateXXXXX() {
   };
 
   const toast = useRef<Toast>(null);
+
+  const [checked, setChecked] = useState(false);
 
   const [entity, setEntity] = useState(initialState);
   const [submitted, setSubmitted] = useState(false);

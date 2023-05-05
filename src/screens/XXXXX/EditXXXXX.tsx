@@ -54,7 +54,7 @@ function CreateXXXXX() {
     }
   };
 
-  const onInputChange = (value: string, name: string) => {
+  const onInputChange = (value: any, name: string) => {
     let newEntity = { ...entity };
     newEntity[`${name}`] = value;
 

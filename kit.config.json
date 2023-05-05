@@ -8,6 +8,7 @@
         { "name": "bio", "type": "InputTextarea", "required": false },
         { "name": "password", "type": "InputText", "tableDisplay": false },
         { "name": "rollNo", "type": "InputNumber" },
+        { "name": "isPublic", "type": "InputSwitch" },
         {
           "name": "gender",
           "type": "RadioButton",

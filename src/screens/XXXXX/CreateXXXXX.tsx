@@ -71,11 +71,6 @@ function CreateXXXXX() {
 
         <div className="p-card-content">INPUT-FIELDS</div>
 
-        <div className="field">
-          <p>Upload</p>
-          <input type="file" accept="image/*" onChange={(e) => onInputChange(e.target.files?.[0], "image")} />
-        </div>
-
         <div className="p-card-footer">
           <Button className="w-max" label="Save" icon="pi pi-check" onClick={saveEntity} />
         </div>

@@ -12,8 +12,9 @@ import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { RadioButton } from "primereact/radiobutton";
 import { InputSwitch } from "primereact/inputswitch";
+import { FileUpload } from "primereact/fileupload";
 
-function CreateXXXXX() {
+function EditXXXXX() {
   const params = useParams();
 
   const initialState: XXXXXType = {
@@ -69,19 +70,29 @@ function CreateXXXXX() {
   };
 
   return (
-    <section className="bg-white p-3 p-fluid border-round">
-      <p className="text-2xl font-bold">Edit XXXXX</p>
+    <>
       <Toast ref={toast} />
-      INPUT-FIELDS
-      <Button className="w-max" label="Save" icon="pi pi-check" onClick={saveEntity} />
-    </section>
+
+      <div className="p-card p-3">
+        <p className="p-card-title">
+          <a href="/xxxxx" className="pi pi-arrow-left mr-2 cursor-pointer" />
+          <span>Edit XXXXX</span>
+        </p>
+
+        <div className="p-card-content">INPUT-FIELDS</div>
+
+        <div className="p-card-footer">
+          <Button className="w-max" label="Save" icon="pi pi-check" onClick={saveEntity} />
+        </div>
+      </div>
+    </>
   );
 }
 
 export default function EditXXXXXPage() {
   return (
     <Layout>
-      <CreateXXXXX />
+      <EditXXXXX />
     </Layout>
   );
 }

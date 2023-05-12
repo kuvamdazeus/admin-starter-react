@@ -1,4 +1,5 @@
 {
+  "backendUrl": "https://example.com",
   "screens": [
     {
       "name": "Students",

@@ -79,7 +79,9 @@ function EditXXXXX() {
           <span>Edit XXXXX</span>
         </p>
 
-        <div className="p-card-content">INPUT-FIELDS</div>
+        <div className="p-card-content">
+          <div className="flex flex-wrap gap-3">INPUT-FIELDS</div>
+        </div>
 
         <div className="p-card-footer">
           <Button className="w-max" label="Save" icon="pi pi-check" onClick={saveEntity} />

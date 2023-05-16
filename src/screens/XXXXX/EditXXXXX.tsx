@@ -13,6 +13,7 @@ import { useParams } from "react-router-dom";
 import { RadioButton } from "primereact/radiobutton";
 import { InputSwitch } from "primereact/inputswitch";
 import { FileUpload } from "primereact/fileupload";
+import { fetcher } from "@/usefetcher";
 
 function EditXXXXX() {
   const params = useParams();
@@ -36,15 +37,17 @@ function EditXXXXX() {
   const [entity, setEntity] = useState(initialState);
   const [submitted, setSubmitted] = useState(false);
 
-  useEffect(() => {
-    XXXXXService.getOne(id).then((data) => setEntity(data));
-  }, []);
+  fetcher.useGET<XXXXXType>(`/xxxxx/${id}`, {
+    onSuccess: (data) => setEntity(data),
+  });
+
+  const { patchData: patchEntity } = fetcher.usePATCH();
 
   const saveEntity = async () => {
     setSubmitted(true);
 
     if (entity.name.trim()) {
-      await XXXXXService.updateById(entity.id, entity);
+      await patchEntity(`/xxxxx/${id}`, entity);
 
       toast.current?.show({
         severity: "success",

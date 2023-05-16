@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@dazeus/usefetcher": "^0.1.5",
     "chart.js": "^4.2.1",
     "primeflex": "^3.3.0",
     "primeicons": "^6.0.1",

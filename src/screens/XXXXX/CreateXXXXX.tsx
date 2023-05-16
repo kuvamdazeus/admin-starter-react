@@ -12,6 +12,7 @@ import { useRef, useState } from "react";
 import { RadioButton } from "primereact/radiobutton";
 import { InputSwitch } from "primereact/inputswitch";
 import { FileUpload } from "primereact/fileupload";
+import { fetcher } from "@/usefetcher";
 
 function CreateXXXXX() {
   const initialState: XXXXXType = {
@@ -31,11 +32,13 @@ function CreateXXXXX() {
   const [entity, setEntity] = useState(initialState);
   const [submitted, setSubmitted] = useState(false);
 
+  const { postData: postEntity } = fetcher.usePOST("/xxxxx/create");
+
   const saveEntity = async () => {
     setSubmitted(true);
 
     if (entity.name.trim()) {
-      await XXXXXService.createOne(entity);
+      await postEntity(entity);
 
       toast.current?.show({
         severity: "success",

@@ -10,6 +10,7 @@ import { XXXXXService } from "@/service/XXXXXService";
 import Layout from "@/layout/layout";
 import { XXXXXType } from "@/types/xxxxx";
 import { useNavigate } from "react-router-dom";
+import { fetcher } from "@/usefetcher";
 
 const XXXXX = () => {
   const navigate = useNavigate();
@@ -27,7 +28,6 @@ const XXXXX = () => {
   };
   const importCsvInputRef = useRef<HTMLInputElement | null>(null);
 
-  const [entities, setEntities] = useState<XXXXXType[]>([]);
   const [deleteEntityDialog, setDeleteEntityDialog] = useState(false);
   const [deleteEntitiesDialog, setDeleteEntitiesDialog] = useState(false);
   const [entity, setEntity] = useState<XXXXXType>(initialState);
@@ -35,6 +35,12 @@ const XXXXX = () => {
   const [globalFilter, setGlobalFilter] = useState("");
   const toast = useRef<Toast>(null);
   const dt = useRef<DataTable<XXXXXType[]>>(null);
+
+  const { data: entities, refetchData: refetchEntities } = fetcher.useGET<XXXXXType[]>("/xxxxx");
+
+  const { deleteData } = fetcher.useDELETE({
+    onSuccess: () => refetchEntities(),
+  });
 
   useEffect(() => {
     // XXXXXService.getAll().then((data) => setEntities(data));
@@ -54,9 +60,7 @@ const XXXXX = () => {
   };
 
   const deleteEntity = async () => {
-    const _xxxxx = await XXXXXService.deleteById(entity.id);
-
-    setEntities(_xxxxx);
+    await deleteData(`/xxxxx/${entity.id}`);
     setDeleteEntityDialog(false);
     setEntity(initialState);
 
@@ -77,9 +81,8 @@ const XXXXX = () => {
   };
 
   const deleteSelected = async () => {
-    const _xxxxx = await XXXXXService.deleteSelected(selectedEntities);
-
-    setEntities(_xxxxx);
+    // TODO: make a single query for deleting multiple entities
+    await Promise.all(selectedEntities.map((entity) => deleteData(`/xxxxx/${entity.id}`)));
     setDeleteEntitiesDialog(false);
     setSelectedEntities([]);
 
@@ -217,7 +220,7 @@ const XXXXX = () => {
 
           <DataTable
             ref={dt}
-            value={entities}
+            value={entities || []}
             selection={selectedEntities}
             onSelectionChange={(e) => setSelectedEntities(e.value as XXXXXType[])}
             dataKey="id"

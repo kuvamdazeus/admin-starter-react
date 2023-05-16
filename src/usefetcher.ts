@@ -1,4 +1,4 @@
-import { createFetcher } from "usefetcher";
+import { createFetcher } from "@dazeus/usefetcher";
 import { BASE_URL } from "@/constants";
 
 export const fetcher = createFetcher({

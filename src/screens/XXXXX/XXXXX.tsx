@@ -15,17 +15,8 @@ import { fetcher } from "@/usefetcher";
 const XXXXX = () => {
   const navigate = useNavigate();
 
-  const initialState: XXXXXType = {
-    id: "",
-    name: "",
-    image: "",
-    description: "",
-    category: "",
-    price: 0,
-    quantity: 0,
-    rating: 0,
-    inventoryStatus: "INSTOCK",
-  };
+  const initialState: XXXXXType = {};
+
   const importCsvInputRef = useRef<HTMLInputElement | null>(null);
 
   const [deleteEntityDialog, setDeleteEntityDialog] = useState(false);

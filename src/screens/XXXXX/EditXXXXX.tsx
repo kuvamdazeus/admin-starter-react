@@ -1,5 +1,4 @@
 import Layout from "@/layout/layout";
-import { XXXXXService } from "@/service/XXXXXService";
 import { XXXXXType } from "@/types/xxxxx";
 import { Button } from "primereact/button";
 import { InputNumber, InputNumberValueChangeEvent } from "primereact/inputnumber";

@@ -6,7 +6,6 @@ import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import { Toast } from "primereact/toast";
 import { Toolbar } from "primereact/toolbar";
-import { XXXXXService } from "@/service/XXXXXService";
 import Layout from "@/layout/layout";
 import { XXXXXType } from "@/types/xxxxx";
 import { useNavigate } from "react-router-dom";

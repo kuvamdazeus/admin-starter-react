@@ -18,17 +18,7 @@ import { fetcher } from "@/usefetcher";
 function EditXXXXX() {
   const params = useParams();
 
-  const initialState: XXXXXType = {
-    id: "",
-    name: "",
-    image: "",
-    description: "",
-    category: "",
-    price: 0,
-    quantity: 0,
-    rating: 0,
-    inventoryStatus: "INSTOCK",
-  };
+  const initialState: XXXXXType = {};
 
   const id = params.id;
 

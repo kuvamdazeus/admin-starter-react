@@ -15,17 +15,7 @@ import { FileUpload } from "primereact/fileupload";
 import { fetcher } from "@/usefetcher";
 
 function CreateXXXXX() {
-  const initialState: XXXXXType = {
-    id: "",
-    name: "",
-    image: "",
-    description: "",
-    category: "",
-    price: 0,
-    quantity: 0,
-    rating: 0,
-    inventoryStatus: "INSTOCK",
-  };
+  const initialState: XXXXXType = {};
 
   const toast = useRef<Toast>(null);
 

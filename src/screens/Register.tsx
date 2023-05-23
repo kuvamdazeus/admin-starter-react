@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Checkbox } from "primereact/checkbox";
 import { Button } from "primereact/button";
 import { Password } from "primereact/password";
@@ -8,26 +8,18 @@ import { classNames } from "primereact/utils";
 import { Page } from "../types/types";
 import { useNavigate } from "react-router-dom";
 import { fetcher } from "@/usefetcher";
-import { Toast } from "primereact/toast";
 
-const LoginPage: Page = () => {
-  const toast = useRef<Toast>(null);
-
+const RegisterPage: Page = () => {
   const navigate = useNavigate();
 
-  const { postData, isLoading } = fetcher.usePOST<any>("/admin/login", {
-    onSuccess: (resData) => {
-      localStorage.setItem("auth_token", resData.data.accessToken);
-      navigate("/dashboard");
-    },
-    onError: async ({ fetchResponse }) => {
-      const data = await fetchResponse.json();
-
-      toast.current?.show({ severity: "error", summary: "Error", detail: data.message });
+  const { postData, isLoading } = fetcher.usePOST("/admin/register", {
+    onSuccess: () => {
+      navigate("/");
     },
   });
 
-  const [emailId, setEmail] = useState("");
+  const [userName, setUserName] = useState("");
+  const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
   const { layoutConfig } = useContext(LayoutContext);
 
@@ -36,31 +28,26 @@ const LoginPage: Page = () => {
     { "p-input-filled": layoutConfig.inputStyle === "filled" }
   );
 
-  const [errors, setErrors] = useState({ email: false, password: false });
+  const [errors, setErrors] = useState({ email: false, password: false, userName: false });
 
   const submit = () => {
     const errs = { email: false, password: false, userName: false };
 
     if (!emailId) errs.email = true;
     if (!password) errs.password = true;
+    if (!userName) errs.userName = true;
 
     if (Object.values(errs).includes(true)) {
       setErrors(errs);
       return;
     }
 
-    postData({ emailId, password });
+    postData({ userName, emailId, password });
   };
 
   return (
     <div className={containerClassName}>
-      <Toast ref={toast} />
       <div className="flex flex-column align-items-center justify-content-center">
-        <img
-          src={`/layout/images/logo-${layoutConfig.colorScheme === "light" ? "dark" : "white"}.svg`}
-          alt="Sakai logo"
-          className="mb-5 w-6rem flex-shrink-0"
-        />
         <div
           style={{
             borderRadius: "56px",
@@ -72,10 +59,23 @@ const LoginPage: Page = () => {
             <div className="text-center mb-5">
               <img src="/demo/images/login/avatar.png" alt="Image" height="50" className="mb-3" />
               <div className="text-900 text-3xl font-medium mb-3">Welcome</div>
-              <span className="text-600 font-medium">Sign in to continue</span>
+              <span className="text-600 font-medium">Sign up to continue</span>
             </div>
 
-            <div>
+            <div className="mb-5">
+              <label htmlFor="username1" className="block text-900 text-xl font-medium mb-2">
+                Username
+              </label>
+              <InputText
+                id="username1"
+                type="text"
+                placeholder="Username"
+                className={"w-full md:w-30rem mb-5 " + (errors.userName ? "p-invalid" : "")}
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+                style={{ padding: "1rem" }}
+              />
+
               <label htmlFor="email1" className="block text-900 text-xl font-medium mb-2">
                 Email
               </label>
@@ -85,7 +85,7 @@ const LoginPage: Page = () => {
                 placeholder="Email address"
                 className={"w-full md:w-30rem mb-5 " + (errors.email ? "p-invalid" : "")}
                 value={emailId}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setEmailId(e.target.value)}
                 style={{ padding: "1rem" }}
               />
 
@@ -104,13 +104,13 @@ const LoginPage: Page = () => {
             </div>
             <Button
               disabled={isLoading}
-              label="Sign In"
+              label="Sign Up"
               className="w-full p-3 text-xl mb-5"
               onClick={submit}
             ></Button>
             <center>
-              <a href="/register" className="font-medium">
-                Don't have an account? Create one here.
+              <a href="/" className="font-medium">
+                Already have an account? Sign in here.
               </a>
             </center>
           </div>
@@ -120,4 +120,4 @@ const LoginPage: Page = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

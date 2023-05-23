@@ -249,10 +249,10 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
-"@dazeus/usefetcher@^0.1.5":
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/@dazeus/usefetcher/-/usefetcher-0.1.5.tgz#b0e1d8dd7ef4243cc3d250e2404fec594dff2a60"
-  integrity sha512-SVs/UytIy9rkYPnbkLOa7fnC2bQ/nYc12DhWgfXws37/Pa84jxNnYfEjB/oajuta8CMUz4znfIP7ZLEt1ZpT2A==
+"@dazeus/usefetcher@^0.1.7":
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/@dazeus/usefetcher/-/usefetcher-0.1.7.tgz#000ff7ef1b9c29b2f7d9125964289bdf2ab88b57"
+  integrity sha512-e1yx//nbUnFPM7873ZlWrOOjmQieLbBhydJ9+sqO0JSmoVJWLcD1yhNoqbm+qEXN4W7SomTq4aCwUch170XlhA==
   dependencies:
     react "^18.2.0"
 

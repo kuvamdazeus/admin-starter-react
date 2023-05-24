@@ -10,6 +10,7 @@ import Layout from "@/layout/layout";
 import { XXXXXType } from "@/types/xxxxx";
 import { useNavigate } from "react-router-dom";
 import { fetcher } from "@/usefetcher";
+import { ServerResponse } from "@/types/types";
 
 const XXXXX = () => {
   const navigate = useNavigate();
@@ -26,7 +27,8 @@ const XXXXX = () => {
   const toast = useRef<Toast>(null);
   const dt = useRef<DataTable<XXXXXType[]>>(null);
 
-  const { data: entities, refetchData: refetchEntities } = fetcher.useGET<XXXXXType[]>("/xxxxx");
+  const { data: entities, refetchData: refetchEntities } =
+    fetcher.useGET<ServerResponse<XXXXXType[]>>("/xxxxx");
 
   const { deleteData } = fetcher.useDELETE({
     onSuccess: () => refetchEntities(),
@@ -210,7 +212,7 @@ const XXXXX = () => {
 
           <DataTable
             ref={dt}
-            value={entities || []}
+            value={entities?.data || []}
             selection={selectedEntities}
             onSelectionChange={(e) => setSelectedEntities(e.value as XXXXXType[])}
             dataKey="id"

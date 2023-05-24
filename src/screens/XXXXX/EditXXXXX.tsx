@@ -13,6 +13,7 @@ import { RadioButton } from "primereact/radiobutton";
 import { InputSwitch } from "primereact/inputswitch";
 import { FileUpload } from "primereact/fileupload";
 import { fetcher } from "@/usefetcher";
+import { ServerResponse } from "@/types/types";
 
 function EditXXXXX() {
   const params = useParams();
@@ -26,8 +27,8 @@ function EditXXXXX() {
   const [entity, setEntity] = useState(initialState);
   const [submitted, setSubmitted] = useState(false);
 
-  fetcher.useGET<XXXXXType>(`/xxxxx/${id}`, {
-    onSuccess: (data) => setEntity(data),
+  fetcher.useGET<ServerResponse<XXXXXType>>(`/xxxxx/${id}`, {
+    onSuccess: (response) => setEntity(response.data),
   });
 
   const { patchData: patchEntity } = fetcher.usePATCH();

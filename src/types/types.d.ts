@@ -1,4 +1,11 @@
 import React, { ReactNode } from "react";
+
+export type ServerResponse<T> = {
+  status: number;
+  message: string;
+  data: T;
+};
+
 import {
   Page,
   AppBreadcrumbProps,

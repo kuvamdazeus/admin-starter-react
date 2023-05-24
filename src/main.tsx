@@ -24,15 +24,14 @@ import "./index.css";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
-      <Route path="/login" element={<LoginPage />} />
+      <Route path="/" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route
-        path="/"
         loader={() => {
           const token = localStorage.getItem("auth_token");
 
           if (token) return null;
-          else return redirect("/login");
+          else return redirect("/");
         }}
       >
         <Route path="dashboard" element={<Dashboard />} />

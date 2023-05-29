@@ -14,7 +14,9 @@ import { ServerResponse } from "@/types/types";
 const XXXXX = () => {
   const navigate = useNavigate();
 
-  const initialState: XXXXXType = {};
+  const initialState: XXXXXType = {
+    /*INITIAL_STATE_FIELDS*/
+  };
 
   const importCsvInputRef = useRef<HTMLInputElement | null>(null);
 

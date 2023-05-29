@@ -49,7 +49,7 @@ function CreateXXXXX() {
   const saveEntity = async () => {
     setSubmitted(true);
 
-    await postEntity(entity);
+    /*VALIDATE_FIELDS*/ await postEntity(entity);
   };
 
   const onInputChange = (value: any, name: string) => {

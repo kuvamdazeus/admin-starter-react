@@ -25,18 +25,31 @@ function CreateXXXXX() {
   const [entity, setEntity] = useState(initialState);
   const [submitted, setSubmitted] = useState(false);
 
-  const { postData: postEntity } = fetcher.usePOST<ServerResponse<any>>("/xxxxx/create");
+  const { postData: postEntity } = fetcher.usePOST<ServerResponse<any>>("/xxxxx/create", {
+    onSuccess: () => {
+      toast.current?.show({
+        severity: "success",
+        summary: "Successful",
+        detail: "XXXXX Created",
+        life: 3000,
+      });
+    },
+    onError: ({ fetchResponse }) => {
+      toast.current?.show({
+        severity: "error",
+        summary: "Error occured",
+        detail: "Error occured while creating entity!",
+        life: 3000,
+      });
+
+      console.log(fetchResponse.json());
+    },
+  });
 
   const saveEntity = async () => {
     setSubmitted(true);
 
     await postEntity(entity);
-    toast.current?.show({
-      severity: "success",
-      summary: "Successful",
-      detail: "XXXXX Created",
-      life: 3000,
-    });
   };
 
   const onInputChange = (value: any, name: string) => {

@@ -57,7 +57,7 @@ function EditXXXXX() {
   const saveEntity = async () => {
     setSubmitted(true);
 
-    await patchEntity(`/xxxxx/${id}`, entity);
+    await patchEntity(`/xxxxx`, entity);
   };
 
   const onInputChange = (value: any, name: string) => {

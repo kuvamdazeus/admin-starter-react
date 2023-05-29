@@ -33,19 +33,31 @@ function EditXXXXX() {
     onSuccess: (response) => setEntity(response.data),
   });
 
-  const { patchData: patchEntity } = fetcher.usePATCH();
+  const { patchData: patchEntity } = fetcher.usePATCH({
+    onSuccess: () => {
+      toast.current?.show({
+        severity: "success",
+        summary: "Successful",
+        detail: "XXXXX Updated",
+        life: 3000,
+      });
+    },
+    onError: ({ fetchResponse }) => {
+      toast.current?.show({
+        severity: "error",
+        summary: "Error occured",
+        detail: "Error occured while updating entity!",
+        life: 3000,
+      });
+
+      console.log(fetchResponse.json());
+    },
+  });
 
   const saveEntity = async () => {
     setSubmitted(true);
 
     await patchEntity(`/xxxxx/${id}`, entity);
-
-    toast.current?.show({
-      severity: "success",
-      summary: "Successful",
-      detail: "XXXXX Updated",
-      life: 3000,
-    });
   };
 
   const onInputChange = (value: any, name: string) => {

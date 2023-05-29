@@ -71,7 +71,7 @@ function CreateXXXXX() {
             </div>
 
             <div className="p-card-content">
-              <div className="flex flex-wrap align-items-end gap-3">INPUT-FIELDS</div>
+              <div className="flex flex-wrap align-items-end gap-3">{/*INPUT_FIELDS*/}</div>
             </div>
 
             <div className="p-card-footer">

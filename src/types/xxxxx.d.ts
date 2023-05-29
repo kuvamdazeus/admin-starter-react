@@ -1,3 +1,3 @@
 export type XXXXXType = {
-  id: string;
+  /*INTERFACE_FIELDS*/
 };

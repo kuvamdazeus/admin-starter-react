@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
@@ -34,10 +34,6 @@ const XXXXX = () => {
   const { deleteData } = fetcher.useDELETE({
     onSuccess: () => refetchEntities(),
   });
-
-  useEffect(() => {
-    // XXXXXService.getAll().then((data) => setEntities(data));
-  }, []);
 
   const hideDeleteEntityDialog = () => {
     setDeleteEntityDialog(false);
@@ -110,7 +106,7 @@ const XXXXX = () => {
 
   // ------- Column Body Templates --------
   const textBodyTemplate = (rowData: XXXXXType, fieldName: string) => {
-    return <>{rowData[fieldName]}</>;
+    return <>{`${rowData[fieldName]}`}</>;
   };
 
   const imageBodyTemplate = (rowData: XXXXXType, fieldName: string) => {

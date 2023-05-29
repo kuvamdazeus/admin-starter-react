@@ -56,11 +56,11 @@ const LoginPage: Page = () => {
     <div className={containerClassName}>
       <Toast ref={toast} />
       <div className="flex flex-column align-items-center justify-content-center">
-        <img
-          src={`/layout/images/logo-${layoutConfig.colorScheme === "light" ? "dark" : "white"}.svg`}
-          alt="Sakai logo"
-          className="mb-5 w-6rem flex-shrink-0"
-        />
+        {/*<img*/}
+        {/*  src={`/layout/images/logo-${layoutConfig.colorScheme === "light" ? "dark" : "white"}.svg`}*/}
+        {/*  alt="Sakai logo"*/}
+        {/*  className="mb-5 w-6rem flex-shrink-0"*/}
+        {/*/>*/}
         <div
           style={{
             borderRadius: "56px",
@@ -70,7 +70,6 @@ const LoginPage: Page = () => {
         >
           <div className="w-full surface-card py-8 px-5 sm:px-8" style={{ borderRadius: "53px" }}>
             <div className="text-center mb-5">
-              <img src="/demo/images/login/avatar.png" alt="Image" height="50" className="mb-3" />
               <div className="text-900 text-3xl font-medium mb-3">Welcome</div>
               <span className="text-600 font-medium">Sign in to continue</span>
             </div>

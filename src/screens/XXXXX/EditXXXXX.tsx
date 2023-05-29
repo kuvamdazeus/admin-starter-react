@@ -42,15 +42,15 @@ function EditXXXXX() {
         life: 3000,
       });
     },
-    onError: ({ fetchResponse }) => {
+    onError: async ({ fetchResponse }) => {
+      const error = (await fetchResponse.json()) as ServerResponse<any>;
+
       toast.current?.show({
         severity: "error",
         summary: "Error occured",
-        detail: "Error occured while updating entity!",
+        detail: error.message,
         life: 3000,
       });
-
-      console.log(fetchResponse.json());
     },
   });
 

@@ -31,6 +31,29 @@ const XXXXX = () => {
   const { data: entities, refetchData: refetchEntities } =
     fetcher.useGET<ServerResponse<XXXXXType[]>>("/xxxxx");
 
+  const { postData: deleteEntities } = fetcher.usePOST<ServerResponse<any>>("/xxxxx/delete", {
+    onSuccess: async ({ message }) => {
+      toast.current?.show({
+        severity: "success",
+        summary: "Successful",
+        detail: message,
+        life: 3000,
+      });
+
+      refetchEntities();
+    },
+    onError: async ({ fetchResponse }) => {
+      const error = (await fetchResponse.json()) as ServerResponse<any>;
+
+      toast.current?.show({
+        severity: "error",
+        summary: "Error occured",
+        detail: error.message,
+        life: 3000,
+      });
+    },
+  });
+
   const { deleteData } = fetcher.useDELETE({
     onSuccess: () => refetchEntities(),
   });
@@ -49,16 +72,12 @@ const XXXXX = () => {
   };
 
   const deleteEntity = async () => {
-    await deleteData(`/xxxxx/${entity.id}`);
-    setDeleteEntityDialog(false);
-    setEntity(initialState);
+    const { error } = await deleteData(`/xxxxx/${entity.id}`);
 
-    toast.current?.show({
-      severity: "success",
-      summary: "Successful",
-      detail: "XXXXX Deleted",
-      life: 3000,
-    });
+    if (!error) {
+      setDeleteEntityDialog(false);
+      setEntity(initialState);
+    }
   };
 
   const exportCSV = () => {
@@ -70,17 +89,12 @@ const XXXXX = () => {
   };
 
   const deleteSelected = async () => {
-    // TODO: make a single query for deleting multiple entities
-    await Promise.all(selectedEntities.map((entity) => deleteData(`/xxxxx/${entity.id}`)));
-    setDeleteEntitiesDialog(false);
-    setSelectedEntities([]);
+    const { error } = await deleteEntities({ ids: selectedEntities.map((entity) => entity.id) });
 
-    toast.current?.show({
-      severity: "success",
-      summary: "Successful",
-      detail: "XXXXX Deleted",
-      life: 3000,
-    });
+    if (!error) {
+      setDeleteEntitiesDialog(false);
+      setSelectedEntities([]);
+    }
   };
 
   const onFileImport = (e: React.ChangeEvent<HTMLInputElement>) => {

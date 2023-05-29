@@ -1,24 +1,26 @@
 import Layout from "@/layout/layout";
-import {XXXXXType} from "@/types/xxxxx";
-import {Button} from "primereact/button";
-import {InputNumber, InputNumberValueChangeEvent} from "primereact/inputnumber";
-import {Dropdown, DropdownChangeEvent} from "primereact/dropdown";
-import {InputText} from "primereact/inputtext";
-import {InputTextarea} from "primereact/inputtextarea";
-import {Toast} from "primereact/toast";
-import {classNames} from "primereact/utils";
-import {useEffect, useRef, useState} from "react";
-import {Link, useParams} from "react-router-dom";
-import {RadioButton} from "primereact/radiobutton";
-import {InputSwitch} from "primereact/inputswitch";
-import {FileUpload} from "primereact/fileupload";
-import {fetcher} from "@/usefetcher";
-import {ServerResponse} from "@/types/types";
+import { XXXXXType } from "@/types/xxxxx";
+import { Button } from "primereact/button";
+import { InputNumber, InputNumberValueChangeEvent } from "primereact/inputnumber";
+import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
+import { InputText } from "primereact/inputtext";
+import { InputTextarea } from "primereact/inputtextarea";
+import { Toast } from "primereact/toast";
+import { classNames } from "primereact/utils";
+import { useEffect, useRef, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { RadioButton } from "primereact/radiobutton";
+import { InputSwitch } from "primereact/inputswitch";
+import { FileUpload } from "primereact/fileupload";
+import { fetcher } from "@/usefetcher";
+import { ServerResponse } from "@/types/types";
 
 function EditXXXXX() {
   const params = useParams();
 
-  const initialState: XXXXXType = {};
+  const initialState: XXXXXType = {
+    /*INITIAL_STATE_FIELDS*/
+  };
 
   const id = params.id;
 
@@ -31,30 +33,30 @@ function EditXXXXX() {
     onSuccess: (response) => setEntity(response.data),
   });
 
-  const {patchData: patchEntity} = fetcher.usePATCH();
+  const { patchData: patchEntity } = fetcher.usePATCH();
 
   const saveEntity = async () => {
     setSubmitted(true);
 
-      await patchEntity(`/xxxxx/${id}`, entity);
+    await patchEntity(`/xxxxx/${id}`, entity);
 
-      toast.current?.show({
-        severity: "success",
-        summary: "Successful",
-        detail: "XXXXX Updated",
-        life: 3000,
-      });
+    toast.current?.show({
+      severity: "success",
+      summary: "Successful",
+      detail: "XXXXX Updated",
+      life: 3000,
+    });
   };
 
   const onInputChange = (value: any, name: string) => {
-    let newEntity = {...entity};
+    let newEntity = { ...entity };
     newEntity[`${name}`] = value;
 
     setEntity(newEntity);
   };
 
   const onInputNumberChange = (value: any, name: string) => {
-    let newEntity = {...entity};
+    let newEntity = { ...entity };
     newEntity[`${name}`] = value;
 
     setEntity(newEntity);
@@ -62,15 +64,18 @@ function EditXXXXX() {
 
   return (
     <>
-      <Toast ref={toast}/>
+      <Toast ref={toast} />
       <div className="grid">
         <div className="col-12 md:col-8 col-offset-2">
           <div className="p-card p-3">
             <div className="card-header flex justify-content-between ">
               <h5 className="card-title">Edit XXXXX</h5>
               <Link to="/xxxxx">
-                <Button icon="pi pi-backward" label="Back"
-                        className="p-button-sm p-button-secondary p-button-secondary"/>
+                <Button
+                  icon="pi pi-backward"
+                  label="Back"
+                  className="p-button-sm p-button-secondary p-button-secondary"
+                />
               </Link>
             </div>
 
@@ -79,7 +84,7 @@ function EditXXXXX() {
             </div>
 
             <div className="p-card-footer">
-              <Button className="w-max" label="Save" icon="pi pi-check" onClick={saveEntity}/>
+              <Button className="w-max" label="Save" icon="pi pi-check" onClick={saveEntity} />
             </div>
           </div>
         </div>
@@ -91,7 +96,7 @@ function EditXXXXX() {
 export default function EditXXXXXPage() {
   return (
     <Layout>
-      <EditXXXXX/>
+      <EditXXXXX />
     </Layout>
   );
 }
